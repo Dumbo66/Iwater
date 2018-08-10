@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="38"
+        android:background="@android:color/background_light"/>
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="66"
+        android:background="@android:color/background_light">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/clear"
+                android:contentDescription="@string/image" />
+
+        </RelativeLayout>
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_device_manager"
+            android:layout_centerInParent="true"
+            android:textSize="20sp" />
+
+        <!--地图切换按钮-->
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center">
+
+            <!--平面地图-->
+            <RelativeLayout
+                android:id="@+id/normal_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/normal_map"
+                    android:contentDescription="@string/image" />
+
+            </RelativeLayout>
+
+            <!--卫星地图-->
+            <RelativeLayout
+                android:id="@+id/satellite_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/satellite_map"
+                    android:contentDescription="@string/image" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!--分隔线-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="902">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/myMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.baidu.mapapi.map.MapView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--"加/叉"按钮-->
+                <RelativeLayout
+                    android:id="@+id/rl_add_device"
+                    android:layout_width="120dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/rect_green_big_rad"
+                    android:layout_centerInParent="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加设备"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:layout_marginStart="4dp"
+                        android:layout_centerInParent="true"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

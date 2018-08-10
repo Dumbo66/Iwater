@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <RelativeLayout
+        android:id="@+id/recycler_item"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/round_gray"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23:00"
+            android:textSize="10sp"
+            android:textColor="@android:color/background_light"/>
+    </RelativeLayout>
+</RelativeLayout>

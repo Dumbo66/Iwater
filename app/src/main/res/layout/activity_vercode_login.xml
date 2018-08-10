@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/background_light">
+    <!--状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="38"
+        android:background="@color/colorTitleBar">
+
+    </RelativeLayout>
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="66"
+        android:background="@color/colorTitleBar">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/clicked_color_back">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/close_white"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/image" />
+
+        </RelativeLayout>
+
+        <!--分隔线-->
+        <Button
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/back"
+            android:layout_marginStart="2dp"
+            android:background="#a0ffffff"/>
+
+        <!--页名-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/back"
+            android:text="@string/tv_login"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <!--内容栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="902"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            tools:ignore="NestedWeights">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/default_head"
+                android:contentDescription="@string/image" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
+
+                <EditText
+                    android:id="@+id/et_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:hint="@string/hint_input_your_number"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:paddingEnd="64dp"
+                    android:paddingStart="110dp"
+                    android:theme="@style/MyEditText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/tv_phone"
+                    android:textSize="18sp" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_clear_tel"
+                    android:layout_width="32dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="invisible"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="10dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <ImageView
+                        android:id="@+id/clear_tel_img"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_centerInParent="true"
+                        android:background ="@drawable/clear"
+                        android:contentDescription="@string/image" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
+
+                <EditText
+                    android:id="@+id/et_pasw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/hint_input_ver_code"
+                    android:inputType="phone"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    android:paddingStart="110dp"
+                    android:paddingEnd="64dp"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/MyEditText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/tv_ver_code"
+                    android:textSize="18sp"
+                    tools:ignore="RelativeOverlap" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_get_verCode"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true">
+
+                    <Button
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_centerVertical="true"
+                        android:background="#60000000"/>
+
+                    <TextView
+                        android:id="@+id/tv_get_verCode_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_get_ver_code"
+                        android:layout_centerInParent="true"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorGreen"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rect_green_little_rad"
+                android:text="@string/tv_login"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="3"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"/>
+
+            <!--登录代表你同意酷狗服务和隐私条款-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_login_and_agree"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_user_protocol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_protocol"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@+id/text_agree"
+                    android:textColor="@color/colorGreen"/>
+
+                <TextView
+                    android:id="@+id/text_and"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_and"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@+id/tv_user_protocol" />
+
+                <TextView
+                    android:id="@+id/tv_privacy_policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_privacy_policy"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@+id/text_and"
+                    android:textColor="@color/colorGreen"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

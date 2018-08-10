@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/myMapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
+
+    </com.baidu.mapapi.map.MapView>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--状态栏-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="38"
+                android:background="@android:color/transparent"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="66"
+                tools:ignore="NestedWeights">
+
+                <RelativeLayout
+                    android:id="@+id/back"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
+
+                    <ImageView
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/close_round" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/my_location"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:visibility="visible"
+                    android:layout_alignParentRight="true">
+
+                    <RelativeLayout
+                        android:id="@+id/normal_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/normal_map" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/satellite_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/satellite_map" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!--内容栏-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="812"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <!--底部菜单栏-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+                </View>
+
+                <RelativeLayout
+                    android:id="@+id/left3"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/satellite_map" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/left2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/satellite_map" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/left1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/satellite_map" />
+                </RelativeLayout>
+
+                <!--"加/叉"按钮-->
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/circle_add"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/round_add"
+                        android:layout_centerInParent="true"/>
+
+                    <ImageView
+                        android:id="@+id/circle_close"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:visibility="invisible"
+                        android:background="@drawable/close_round"
+                        android:layout_centerInParent="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/right1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="invisible">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/satellite_map" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/right2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/satellite_map" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_refresh"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/iv_refresh"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:visibility="visible"
+                        android:background="@drawable/refresh" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2">
+                </View>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <!--折线图选项-->
+     <RelativeLayout
+        android:id="@+id/line_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/rect_black_little_rad"
+        android:layout_weight="1">
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_centerInParent="true"
+             android:gravity="center">
+             <ImageView
+                 android:layout_width="28dp"
+                 android:layout_height="28dp"
+                 android:background="@drawable/round_add" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="折线图"
+                 android:textSize="15sp"
+                 android:layout_marginStart="8dp"
+                 android:textColor="@android:color/background_light"/>
+         </LinearLayout>
+     </RelativeLayout>
+
+    <!--直方图选项-->
+    <RelativeLayout
+        android:id="@+id/bar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rect_black_little_rad"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/round_add" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="直方图"
+                android:textSize="15sp"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/background_light"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--雷达图选项-->
+    <RelativeLayout
+        android:id="@+id/radar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rect_black_little_rad"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/round_add" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="雷达图"
+                android:textSize="15sp"
+                android:layout_marginStart="8dp"
+                android:textColor="@android:color/background_light"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

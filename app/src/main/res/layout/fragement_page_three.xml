@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--消息通知栏-->
+        <RelativeLayout
+            android:id="@+id/rl_warn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:id="@+id/image_warn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/notice_bell"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/image_warn"
+                android:text="超标警报"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/in" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"/>
+        </RelativeLayout>
+
+        <!--消息通知栏-->
+        <RelativeLayout
+            android:id="@+id/rl_notice"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:id="@+id/image_notice"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/notice"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/image_notice"
+                android:text="消息通知"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/in" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"/>
+        </RelativeLayout>
+
+        <!--群众投诉栏-->
+        <RelativeLayout
+            android:id="@+id/rl_people_complain"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:id="@+id/people"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/people_complain"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/people"
+                android:text="群众投诉"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/in" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="15dp"/>
+        </RelativeLayout>
+
+        <!--消息通知栏-->
+        <RelativeLayout
+            android:id="@+id/rl_haha"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:id="@+id/info_4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/undo_task"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/info_4"
+                android:text="处理反馈"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/in" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/image_haha"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="7dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/four_3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="7dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/clicked_color_gray">
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

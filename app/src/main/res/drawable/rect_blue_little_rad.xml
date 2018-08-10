@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="true"
+        android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <!--点击后颜色-->
+            <solid android:color="#7045bafd"/>
+            <!--设置四个角为圆角-->
+            <corners android:radius="8dp"/><!--radius:圆弧半径-->
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <!--初始颜色-->
+            <solid android:color="#45bafd"/>
+            <!--设置四个角为圆角-->
+            <corners android:radius="8dp"/><!--radius:圆弧半径-->
+        </shape>
+    </item>
+</selector>

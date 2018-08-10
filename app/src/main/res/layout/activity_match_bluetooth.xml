@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="38"
+        android:background="@android:color/background_light"/>
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="66"
+        android:background="@android:color/background_light">
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/clicked_color_gray">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/clear"
+                android:contentDescription="@string/image" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_match_bluetooth"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <!--分隔线-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <!--蓝牙搜索匹配-->
+    <LinearLayout
+        android:id="@+id/ll_match_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="902"
+        android:orientation="vertical"
+        android:background="@android:color/background_light">
+
+        <!--蓝牙显示区-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            tools:ignore="NestedWeights">
+
+                <!--已配对设备-->
+                <LinearLayout
+                    android:id="@+id/ll_matched_device"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_matched_device"
+                        android:textSize="18sp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ListView
+                            android:id="@+id/lv_matched_device"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:listSelector="@android:color/transparent">
+
+                        </ListView>
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                </LinearLayout>
+
+                <!--可用设备-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_can_use_device"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tv_search_tip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tv_no_can_use_device"
+                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@android:color/darker_gray"/>
+
+                    <ListView
+                        android:id="@+id/lv_can_use_device"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:listSelector="@android:color/transparent">
+
+                    </ListView>
+
+                </LinearLayout>
+
+        </LinearLayout>
+
+        <!--搜索蓝牙-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <Button
+                android:id="@+id/btn_search_bluetooth"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rect_green_big_rad"
+                android:text="@string/tv_search_bluetooth"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:id="@+id/btn_stop_search"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/rect_green_big_rad"
+                android:text="@string/tv_stop_search"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

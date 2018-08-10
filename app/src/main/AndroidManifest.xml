@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.app.dumbo.iwater">
+    <uses-sdk tools:overrideLibrary="cn.smssdk,cn.smssdk.gui" />
+
+    <!--权限-->
+    <!--完全的网络访问-->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--查看WLAN状态-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <!--查看联系人-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--接收短信-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!--读取短信-->
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <!--访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于加快GPS首次定位-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!--相机权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!--允许程序连接到已配对的蓝牙设备-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!--允许程序发现和配对蓝牙设备-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!--读取系统信息，包含系统版本等信息 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!--读取设备硬件信息-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--允许sd卡写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 用于Android M及以上系统，申请加入忽略电池优化白名单-->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/iwater"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/iwater"
+        android:supportsRtl="true"
+        android:theme="@style/MyAppTheme"
+        android:hardwareAccelerated="true"
+        android:screenOrientation="portrait"
+        android:name="android.support.multidex.MultiDexApplication"
+        tools:replace="android:icon,android:theme,android:name">
+
+        <!--BaiduMapKey-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Ut5sagVWHRhOGvVRibF4QVlZXjZF2RRr" />
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--百度地图定位service-->
+        <service android:name="com.baidu.location.f"
+            android:enabled="true" android:process=":remote"/>
+
+        <!--百度鹰眼追踪service-->
+        <service
+            android:name="com.baidu.trace.LBSTraceService"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+
+        <!--第111111111111111111111111111111111111111111111111111111111111111111111111111111111页-->
+        <!--数据图表界面-->
+        <activity android:name=".activity.pageOne.mapMonitor.ChartActivity"/>
+
+        <!--移动监测-->
+        <activity android:name=".activity.pageOne.MobileMonitorActivity"/>
+
+        <!--政策法规界面-->
+        <activity android:name=".activity.pageOne.PolicyActivity"/>
+
+        <!--实时监测界面-->
+        <activity android:name=".activity.pageOne.mapMonitor.MapMonitorActivity"/>
+
+        <!--河湖巡查界面-->
+        <activity android:name=".activity.pageOne.PatrolActivity"/>
+
+        <!--巡查记录界面-->
+        <activity android:name=".activity.pageFour.patrolRecord.PatrolQueryActivity"/>
+
+        <!--问题记录界面-->
+        <activity android:name=".activity.pageOne.AddMomentActivity"/>
+
+        <!--群众投诉界面-->
+        <activity android:name=".activity.pageThree.PeopleActivity" />
+
+        <!--待办事宜页面-->
+        <activity android:name=".activity.pageOne.UndoTaskActivity"/>
+
+        <!--事件督办界面-->
+        <activity android:name=".activity.pageOne.RiverInfoActivity"/>
+
+        <!--菜单界面-->
+        <activity android:name=".activity.pageOne.MenuActivity"/>
+
+        <!--扫描界面-->
+        <activity android:name=".activity.pageOne.ScanActivity"
+            android:theme="@style/zxing_CaptureTheme"/>
+
+        <!--第333333333333333333333333333333333333333333333333333333333333333333333333333333333页-->
+        <!--超标警报-->
+        <activity android:name=".activity.pageThree.WarnActivity"/>
+
+        <!--消息通知页面-->
+        <activity android:name=".activity.pageThree.NoticeActivity"/>
+
+        <!--第444444444444444444444444444444444444444444444444444444444444444444444444444444444页-->
+        <!--收藏页面-->
+        <activity android:name=".activity.pageFour.AttendanceActivity"/>
+
+        <!--帮助与反馈页面-->
+        <activity android:name=".activity.pageFour.HelpActivity"/>
+
+        <!--设置页面-->
+        <activity android:name=".activity.pageFour.SetActivity"/>
+
+        <!--登录+注册界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.LoginRegisterActivity"/>
+
+        <!--登录界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.LoginActivity"/>
+
+        <!--注册界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.RegisterActivity"/>
+
+        <!--验证码注册界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.VerCodeLoginActivity"/>
+
+        <!--核验手机号界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.CheckTelActivity"/>
+
+        <!--设置密码界面-->
+        <activity android:name=".activity.pageFour.loginAndRegister.SetPaswActivity"/>
+
+        <!--设备管理-->
+        <activity android:name=".activity.pageFour.deviceManager.DeviceManagerActivity"/>
+
+        <!--添加设备-->
+        <activity android:name=".activity.pageFour.deviceManager.AddDeviceActivity"/>
+
+        <!--巡查记录-->
+        <activity android:name=".activity.pageFour.patrolRecord.PatrolRecordActivity"/>
+
+        <!--治理目标-->
+        <activity android:name=".activity.pageFour.FlagActivity"/>
+
+        <!--考核评估-->
+        <activity android:name=".activity.pageFour.AssessActivity"/>
+
+        <!--获得成就-->
+        <activity android:name=".activity.pageFour.GradeActivity"/>
+
+        <!--关于应用-->
+        <activity android:name=".activity.pageFour.AboutActivity"/>
+
+    </application>
+
+</manifest>

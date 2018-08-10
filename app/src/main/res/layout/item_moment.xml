@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchWrap"
+    android:padding="8dp"
+    android:background="@android:color/background_light">
+
+    <cn.bingoogolapple.photopicker.widget.BGAImageView
+        android:id="@+id/iv_item_moment_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/aa"
+        app:bga_iv_circle="true"/>
+
+    <TextView
+        android:id="@+id/tv_item_moment_user_name"
+        style="@style/MatchWrap"
+        android:layout_toEndOf="@id/iv_item_moment_avatar"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="Dumbo"
+        android:textColor="#707EA3"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_item_moment_time"
+        style="@style/MatchWrap"
+        android:layout_below="@+id/tv_item_moment_user_name"
+        android:layout_toEndOf="@id/iv_item_moment_avatar"
+        android:layout_marginTop="2dp"
+        android:textSize="13sp"
+        android:textColor="#8e8d8d"
+        android:text="2018.7.24 10:44"/>
+
+    <RelativeLayout
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="5dp"
+        android:gravity="center|right">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/three_point_gray" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_item_moment_content"
+        style="@style/MatchWrap"
+        android:layout_below="@id/iv_item_moment_avatar"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:textColor="#474747"
+        android:textSize="16sp"
+        android:lineSpacingMultiplier="1.2"
+        tools:text="我是测试内容"/>
+
+    <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+        android:id="@+id/npl_moment_item_photos"
+        style="@style/MatchWrap"
+        android:layout_below="@id/tv_item_moment_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        app:bga_npl_itemCornerRadius="0dp"
+        app:bga_npl_itemSpanCount="3"
+        app:bga_npl_itemWhiteSpacing="2dp"
+        app:bga_npl_itemWidth="0dp"
+        app:bga_npl_otherWhiteSpacing="0dp"
+        app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+        app:bga_npl_showAsLargeWhenOnlyOne="true"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/npl_moment_item_photos"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/iv_location"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/simple_location"/>
+
+        <TextView
+            android:id="@+id/tv_item_moment_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/iv_location"
+            android:text="天津市北辰区河北工业大学熙湖"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/rl_location">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/share"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分享"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/comment"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="评论"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/focus"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--菜单栏-->
+        <LinearLayout
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:background="@android:color/background_light"
+            android:orientation="vertical">
+
+            <!--菜单栏第一列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--地图监测-->
+                <RelativeLayout
+                    android:id="@+id/rl_map_monitor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_monitor"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/map_monitor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_monitor"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_map_monitor"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--移动监测-->
+                <RelativeLayout
+                    android:id="@+id/rl_mobile_monitor"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_mobile_device"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/mobile_monitor" />
+
+                    <TextView
+                        android:id="@+id/tv_mobile_device"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_mobile_device"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_mobile_monitor"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--河湖巡查-->
+                <RelativeLayout
+                    android:id="@+id/rl_river_patrol"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_patrol"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/river_patrol" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_patrol"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_river_patrol"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--问题记录-->
+                <RelativeLayout
+                    android:id="@+id/rl_problem_record"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_note"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/problem_record" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_note"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_problem_record"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!--菜单栏第二列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--待办事宜-->
+                <RelativeLayout
+                    android:id="@+id/rl_undo_task"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_task"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/undo_task" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_task"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_task"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--事件督办-->
+                <RelativeLayout
+                    android:id="@+id/rl_river_info"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_supervision"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_alignStart="@+id/textView3"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/recorder" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_supervision"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_river_info"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--政策法规-->
+                <RelativeLayout
+                    android:id="@+id/rl_policy"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_people"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/policy" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_people"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_policy"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+                <!--更多-->
+                <RelativeLayout
+                    android:id="@+id/rl_more"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/clicked_color_gray"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/image_more"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/more" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/image_more"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_more"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--河长快讯-->
+        <LinearLayout
+            android:id="@+id/news"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/background_light"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                android:layout_weight="2"
+                android:gravity="bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_quick_info"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--巡河动态-->
+        <LinearLayout
+            android:id="@+id/dynamic"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/background_light"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="15dp"
+                android:layout_weight="2"
+                android:gravity="bottom">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_patrol_dynamic"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/background_light">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/background_light">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="7dp"
+            android:background="@android:color/background_light">
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

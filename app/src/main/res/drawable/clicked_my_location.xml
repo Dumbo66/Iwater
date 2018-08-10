@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--点击后图案-->
+    <item android:state_enabled="true"
+        android:state_pressed="true"
+        android:drawable="@drawable/my_location_blue"/>
+
+    <!--点击前图案-->
+    <item android:drawable="@drawable/my_location_gray"/>
+</selector>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+    <!--状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="38"
+        android:background="@android:color/background_light">
+
+    </RelativeLayout>
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="66"
+        android:background="@android:color/background_light"
+        android:gravity="center">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/clicked_color_gray">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/clear"
+                android:contentDescription="@string/image" />
+        </RelativeLayout>
+
+        <!--查看时间-->
+        <RelativeLayout
+            android:id="@+id/rl_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/clicked_color_gray"
+            tools:ignore="RelativeOverlap">
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_date"
+                android:textColor="@color/colorGreen"
+                android:layout_centerVertical="true"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <!--显示图标切换按钮-->
+        <RelativeLayout
+            android:id="@+id/chart_type_show"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/clicked_color_gray"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/three_point_gray"
+                android:contentDescription="@string/image"/>
+        </RelativeLayout>
+
+        <!--隐藏图标切换按钮-->
+        <RelativeLayout
+            android:id="@+id/chart_type_dismiss"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/clicked_color_gray"
+            android:visibility="invisible"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/three_point_gray"
+                android:contentDescription="@string/image" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <!--分隔线-->
+    <Button
+       android:layout_width="match_parent"
+       android:layout_height="1dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="902">
+
+        <!--内容栏之折线图-->
+        <ScrollView
+            android:id="@+id/sv_line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!--温度折线图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:background="@android:color/background_light">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/tem_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </RelativeLayout>
+
+                <!--溶氧折线图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/background_light">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/dio_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </RelativeLayout>
+
+                <!--PH折线图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/background_light">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/ph_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </RelativeLayout>
+
+                <!--浊度折线图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/background_light">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/tur_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </RelativeLayout>
+
+                <!--电导率折线图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@android:color/background_light">
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/con_line_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp">
+                    </com.github.mikephil.charting.charts.LineChart>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!--内容栏之直方图-->
+        <ScrollView
+            android:id="@+id/sv_bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@string/tv_bar_chart"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!--内容栏之雷达图-->
+        <ScrollView
+            android:id="@+id/sv_radar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@android:color/background_light">
+                <com.github.mikephil.charting.charts.RadarChart
+                    android:id="@+id/my_radar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="840">
+                </com.github.mikephil.charting.charts.RadarChart>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="160"
+                    android:gravity="center">
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        tools:ignore="NestedWeights" />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/my_recycler_view"
+                        android:layout_width="210dp"
+                        android:layout_height="50dp">
+                    </android.support.v7.widget.RecyclerView>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</LinearLayout>

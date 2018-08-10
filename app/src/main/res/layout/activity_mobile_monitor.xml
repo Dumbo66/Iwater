@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--状态栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="38"
+        android:background="@android:color/background_light"/>
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="66"
+        android:background="@android:color/background_light">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/image"
+                android:src="@drawable/clear" />
+
+        </RelativeLayout>
+
+        <!--标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="移动监测"
+            android:textSize="20sp"
+            tools:ignore="RelativeOverlap" />
+
+        <!--平面地图-->
+        <RelativeLayout
+            android:id="@+id/normal_map"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/rl_bluetooth"
+            android:gravity="center|right"
+            android:visibility="invisible"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/normal_map"
+                android:contentDescription="@string/image" />
+
+        </RelativeLayout>
+
+        <!--卫星地图-->
+        <RelativeLayout
+            android:id="@+id/satellite_map"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/rl_bluetooth"
+            android:gravity="center|right"
+            android:visibility="visible"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/satellite_map"
+                android:contentDescription="@string/image" />
+
+        </RelativeLayout>
+
+        <!--蓝牙按钮-->
+        <RelativeLayout
+            android:id="@+id/rl_bluetooth"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/clicked_color_gray">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/image"
+                android:src="@drawable/bluetooth" />
+        </RelativeLayout>
+
+        <!--分隔线-->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+    </RelativeLayout>
+
+    <!--内容栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="902">
+
+        <!--底层Map-->
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/myMapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true">
+
+        </com.baidu.mapapi.map.MapView>
+
+        <ScrollView
+            android:id="@+id/sv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rl_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="510dp">
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rect_white_little_rad">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_date"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:paddingStart="6dp"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="日期：2018-6-3"
+                            android:textColor="@color/colorGreen"
+                            android:textSize="16sp"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!--监测位置信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:orientation="vertical"
+                    android:padding="6dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/rect_white_little_rad">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="我的位置"
+                                android:textSize="16sp"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:id="@+id/tv_lat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="纬度：39.234567"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+                            <TextView
+                                android:id="@+id/tv_lng"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="经度：117.346453"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_address"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="地址：天津市北辰区河北工业大学熙湖"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--监测数据-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/rect_white_little_rad"
+                    android:orientation="vertical"
+                    android:layout_marginTop="6sp"
+                    android:padding="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_params"
+                                android:textSize="16sp"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="监测数据"
+                                android:textSize="16sp"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="状态"
+                                android:textSize="16sp"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_temperature"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_tem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_ph"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_ph"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_turbidity"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_tur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="——" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_dissolved_oxygen"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_dio"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_conductivity"
+                                android:layout_centerVertical="true"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_con"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/display_chart"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tv_grade"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2">
+                            <TextView
+                                android:id="@+id/tv_gad"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="——"
+                                android:layout_centerVertical="true"/>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center">
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/rect_white_little_rad">
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_post_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:gravity="center"
+                    android:background="@drawable/rect_white_little_rad">
+                    <TextView
+                        android:id="@+id/tv_post_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上传数据"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="18sp"
+                        android:layout_centerInParent="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+</LinearLayout>

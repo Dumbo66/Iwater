@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!--扫描的窗口--><!--第一层-->
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/my_dbv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:zxing_framing_rect_width="240dp"
+        app:zxing_framing_rect_height="240dp"
+        android:layout_below="@+id/one"
+        app:zxing_preview_scaling_strategy="fitXY"
+        app:zxing_use_texture_view="true"
+        app:zxing_scanner_layout="@layout/my_barcode_scanner">
+
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--标题栏：标题+返回键+相册--><!--第二层-->
+        <RelativeLayout
+            android:id="@+id/one"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="80"
+            android:background="#60000000">
+
+            <RelativeLayout
+                android:id="@+id/back"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/close_white"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫描二维码"
+                android:textColor="@android:color/background_light"
+                android:layout_centerInParent="true"
+                android:textSize="20sp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_open_album"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/image_photo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/photo"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!--空-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="700"
+            android:background="@android:color/transparent">
+
+        </RelativeLayout>
+
+        <!--工具栏：我的相册+闪光灯-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="200"
+            android:background="@android:color/transparent">
+
+            <RelativeLayout
+                android:id="@+id/torch_off"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/image_torch_off"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/torch_off"/>
+
+                <TextView
+                    android:id="@+id/text_torch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="轻触点亮"
+                    android:textColor="@android:color/background_light"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/image_torch_off"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/torch_on"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/image_torch_on"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/torch_on"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="轻触熄灭"
+                    android:textColor="#ff00ff00"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/image_torch_on"/>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</FrameLayout>

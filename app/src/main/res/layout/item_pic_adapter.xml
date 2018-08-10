@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_white_little_rad"
+    android:orientation="vertical">
+
+    <!--标题-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+        <!--用户昵称-->
+        <TextView
+            android:id="@+id/tv_nick_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingStart="8dp"
+            android:text="@string/tv_nick_name"
+            android:textSize="18sp"/>
+
+        <!--时间-->
+        <TextView
+            android:id="@+id/tv_time_people"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="@string/tv_time"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_marginTop="5dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="世界和平世界和平世界和平世界和平世界和平世界和平世界和平世界和平世界和平世界界和平世界和平世界和平世界界和平世界界和平世界和世界和平世界和平世界和平世界和平世界和平世界和平世界和平世界和平世界和平……"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <ImageView
+            android:id="@+id/image_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/one"
+            android:padding="2dp"/>
+
+        <ImageView
+            android:id="@+id/image_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/one"
+            android:padding="2dp"/>
+
+        <ImageView
+            android:id="@+id/image_three"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/one"
+            android:padding="2dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginBottom="4dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="待阅"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="待处理"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/tv_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XXX"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
