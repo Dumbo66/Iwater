@@ -3,19 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light"/>
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@android:color/background_light">
 
         <!--返回按钮-->
@@ -24,14 +18,12 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:background="@drawable/clicked_color_gray">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/image"
                 android:src="@drawable/clear" />
-
         </RelativeLayout>
 
         <!--标题-->
@@ -43,40 +35,36 @@
             android:textSize="20sp"
             tools:ignore="RelativeOverlap" />
 
-        <!--平面地图-->
+        <!--平面地图按钮-->
         <RelativeLayout
-            android:id="@+id/normal_map"
+            android:id="@+id/rl_normal_map"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_toStartOf="@+id/rl_bluetooth"
             android:gravity="center|right"
             android:visibility="invisible"
             android:background="@drawable/clicked_color_gray">
-
             <ImageView
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/normal_map"
                 android:contentDescription="@string/image" />
-
         </RelativeLayout>
 
-        <!--卫星地图-->
+        <!--卫星地图按钮-->
         <RelativeLayout
-            android:id="@+id/satellite_map"
+            android:id="@+id/rl_satellite_map"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_toStartOf="@+id/rl_bluetooth"
             android:gravity="center|right"
             android:visibility="visible"
             android:background="@drawable/clicked_color_gray">
-
             <ImageView
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/satellite_map"
                 android:contentDescription="@string/image" />
-
         </RelativeLayout>
 
         <!--蓝牙按钮-->
@@ -86,7 +74,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:background="@drawable/clicked_color_gray">
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -95,18 +82,15 @@
                 android:src="@drawable/bluetooth" />
         </RelativeLayout>
 
-        <!--分隔线-->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
     </RelativeLayout>
 
     <!--内容栏-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="902">
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:background="@color/color_background" >
 
         <!--底层Map-->
         <com.baidu.mapapi.map.MapView
@@ -114,17 +98,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"/>
 
-        </com.baidu.mapapi.map.MapView>
-
+        <!--内容栏-->
         <ScrollView
             android:id="@+id/sv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
             android:scrollbars="none">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,18 +114,19 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp">
 
+                <!--null-->
                 <RelativeLayout
                     android:id="@+id/rl_empty"
                     android:layout_width="match_parent"
-                    android:layout_height="510dp">
+                    android:layout_height="510dp"/>
 
-                </RelativeLayout>
-
+                <!--日期选择-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/rect_white_little_rad">
 
+                    <!--日期选择按钮-->
                     <RelativeLayout
                         android:id="@+id/rl_date"
                         android:layout_width="0dp"
@@ -165,28 +148,47 @@
                 <!--监测位置信息-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="6dp"
+                    android:padding="8dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/rect_white_little_rad">
 
+                    <!--我的位置-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的位置"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/color_background"/>
+
+                    <!--经纬度-->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="10dp">
 
-                        <RelativeLayout
+                        <TextView
+                            android:id="@+id/tv_lat"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="我的位置"
-                                android:textSize="16sp"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="纬度：——"
+                            android:layout_centerVertical="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_lng"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="经度：——"
+                            android:layout_centerVertical="true"/>
 
                     </LinearLayout>
 
@@ -194,59 +196,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-                            <TextView
-                                android:id="@+id/tv_lat"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="纬度：39.234567"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1">
-                            <TextView
-                                android:id="@+id/tv_lng"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="经度：117.346453"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-                            <TextView
-                                android:id="@+id/tv_address"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="地址：天津市北辰区河北工业大学熙湖"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-
-                    </LinearLayout>
+                    <!--地址-->
+                    <TextView
+                        android:id="@+id/tv_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地址：——"
+                        android:layout_marginTop="10dp"
+                        android:layout_centerVertical="true"/>
 
                 </LinearLayout>
 
@@ -257,49 +214,37 @@
                     android:background="@drawable/rect_white_little_rad"
                     android:orientation="vertical"
                     android:layout_marginTop="6sp"
-                    android:padding="6dp">
+                    android:padding="8dp">
 
+                    <!--表头-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
+                        <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/tv_params"
-                                android:textSize="16sp"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="@string/tv_params"
+                            android:textSize="16sp"
+                            android:layout_centerVertical="true"/>
 
-                        <RelativeLayout
+                        <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="监测数据"
-                                android:textSize="16sp"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="监测数据"
+                            android:textSize="16sp"
+                            android:layout_centerVertical="true"/>
 
-                        <RelativeLayout
+                        <TextView
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="状态"
-                                android:textSize="16sp"
-                                android:layout_centerVertical="true"/>
-                        </RelativeLayout>
+                            android:text="状态"
+                            android:textSize="16sp"
+                            android:layout_centerVertical="true"/>
 
                     </LinearLayout>
 
@@ -312,40 +257,27 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_temperature"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_tem"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -358,40 +290,27 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_ph"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_ph"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -404,41 +323,27 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_turbidity"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_tur"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:layout_centerVertical="true"
                                 android:text="——" />
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -451,40 +356,26 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_dissolved_oxygen"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_dio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -497,42 +388,27 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_conductivity"
                                 android:layout_centerVertical="true"/>
 
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_con"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/display_chart"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -545,28 +421,20 @@
                         android:layout_height="0dp"
                         android:layout_weight="1">
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="@string/tv_grade"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2">
                             <TextView
                                 android:id="@+id/tv_gad"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
                                 android:text="——"
                                 android:layout_centerVertical="true"/>
-                        </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -580,6 +448,7 @@
 
                 </LinearLayout>
 
+                <!---->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
@@ -588,6 +457,7 @@
 
                 </RelativeLayout>
 
+                <!--上传数据按钮-->
                 <RelativeLayout
                     android:id="@+id/rl_post_data"
                     android:layout_width="match_parent"
@@ -604,11 +474,9 @@
                         android:textColor="@color/colorGreen"
                         android:textSize="18sp"
                         android:layout_centerInParent="true"/>
-
                 </RelativeLayout>
 
             </LinearLayout>
-
         </ScrollView>
 
     </RelativeLayout>

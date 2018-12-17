@@ -8,10 +8,12 @@
     <color name="color_clicked_gray">#30aaaaaa</color>
     <color name="colorTitleBar">#2faf22</color>
     <color name="colorClickedBack">#0e8c01</color>
-    <color name="colorPrimayNetState">#90ffbcba</color>,
+    <color name="colorPrimaryNetState">#90ffbcba</color>,
     <color name="colorPressedNetState">#fcadab</color>
     <color name="colorPopupWindow">#a0000000</color>
     <color name="colorTimeRound">#61000000</color>
+    <color name="color_background">#20aaaaaa</color>
+    <color name="color_divider">#40aaaaaa</color>
 
     <!-- ========================== 自定义 PhotoPicker 颜色 START ========================== -->
     <!-- PhotoPicker 状态栏的颜色 -->

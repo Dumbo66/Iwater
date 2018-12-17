@@ -40,6 +40,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.baidu.mapapi.utils.CoordinateConverter.CoordType.GPS;
+
 /**
  * Created by baidu on 17/2/9.
  */
@@ -67,7 +69,7 @@ public class MapUtil {
         if (CoordType.wgs84 == location.getCoordType()) {
             LatLng sourceLatLng = currentLatLng;
             CoordinateConverter converter = new CoordinateConverter();
-            converter.from(CoordinateConverter.CoordType.GPS);
+            converter.from(GPS);
             converter.coord(sourceLatLng);
             currentLatLng = converter.convert();
         }
@@ -81,6 +83,19 @@ public class MapUtil {
      */
     public static com.baidu.trace.model.LatLng convertMap2Trace(LatLng latLng) {
         return new com.baidu.trace.model.LatLng(latLng.latitude, latLng.longitude);
+    }
+
+    /**
+     *  将wgs84坐标转换成百度bd09ll坐标
+     * @param sourceLatLng wgs84
+     * @return bd09ll
+     */
+    public static LatLng convertWgs84ToBd09ll(LatLng sourceLatLng) {
+        CoordinateConverter converter  = new CoordinateConverter();
+        converter.from(GPS);
+        converter.coord(sourceLatLng);
+        LatLng desLatLng = converter.convert();
+        return desLatLng;
     }
 
     /**

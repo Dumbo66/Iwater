@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.superClass.WithBackActivity;
+import com.app.dumbo.iwater.activity.superClass.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.Map;
  * Created by dumbo on 2018/6/3
  */
 
-public class PatrolRecordActivity extends WithBackActivity {
+public class PatrolRecordActivity extends BaseActivity {
     private DatePicker datePicker;
     private ListView listView;
 

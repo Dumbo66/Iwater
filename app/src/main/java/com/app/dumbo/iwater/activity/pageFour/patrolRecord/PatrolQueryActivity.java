@@ -7,7 +7,6 @@ import android.widget.ScrollView;
 
 import com.app.dumbo.iwater.R;
 import com.app.dumbo.iwater.activity.superClass.BaseMapActivity;
-import com.app.dumbo.iwater.util.CommonUtil;
 import com.app.dumbo.iwater.util.MapUtil;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;

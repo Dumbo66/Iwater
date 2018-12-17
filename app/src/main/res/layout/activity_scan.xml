@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <!--扫描的窗口--><!--第一层-->
@@ -12,40 +13,37 @@
         android:layout_height="match_parent"
         app:zxing_framing_rect_width="240dp"
         app:zxing_framing_rect_height="240dp"
-        android:layout_below="@+id/one"
         app:zxing_preview_scaling_strategy="fitXY"
         app:zxing_use_texture_view="true"
-        app:zxing_scanner_layout="@layout/my_barcode_scanner">
+        app:zxing_scanner_layout="@layout/my_barcode_scanner"/>
 
-    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
-
+    <!--第二层-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!--标题栏：标题+返回键+相册--><!--第二层-->
+        <!--标题栏：标题+返回键+相册-->
         <RelativeLayout
             android:id="@+id/one"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="80"
-            android:background="#60000000">
+            android:layout_height="60dp"
+            android:background="@color/zxing_transparent">
 
+            <!--返回键-->
             <RelativeLayout
                 android:id="@+id/back"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center">
-
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/close_white"/>
-
             </RelativeLayout>
 
+            <!--标题-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,6 +52,7 @@
                 android:layout_centerInParent="true"
                 android:textSize="20sp" />
 
+            <!--从相册选择二维码-->
             <RelativeLayout
                 android:id="@+id/rl_open_album"
                 android:layout_width="60dp"
@@ -77,7 +76,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="700"
+            android:layout_weight="1"
             android:background="@android:color/transparent">
 
         </RelativeLayout>
@@ -85,10 +84,10 @@
         <!--工具栏：我的相册+闪光灯-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="200"
+            android:layout_height="200dp"
             android:background="@android:color/transparent">
 
+            <!--点亮-->
             <RelativeLayout
                 android:id="@+id/torch_off"
                 android:layout_width="100dp"
@@ -114,6 +113,7 @@
 
             </RelativeLayout>
 
+            <!--熄灭-->
             <RelativeLayout
                 android:id="@+id/torch_on"
                 android:layout_width="100dp"
@@ -137,7 +137,6 @@
                     android:layout_below="@+id/image_torch_on"/>
 
             </RelativeLayout>
-
 
         </RelativeLayout>
     </LinearLayout>

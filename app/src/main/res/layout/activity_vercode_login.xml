@@ -5,19 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/background_light">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@color/colorTitleBar">
 
-    </RelativeLayout>
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@color/colorTitleBar">
 
         <!--返回按钮-->
@@ -27,7 +19,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:background="@drawable/clicked_color_back">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -35,7 +26,6 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/image" />
-
         </RelativeLayout>
 
         <!--分隔线-->
@@ -61,38 +51,33 @@
     </RelativeLayout>
 
     <!--内容栏-->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="902"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@android:color/background_light">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            tools:ignore="NestedWeights">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:gravity="center|top">
 
+            <!--默认头像-->
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:src="@drawable/default_head"
                 android:contentDescription="@string/image" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            android:padding="12dp">
-
+            <!--手机号栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_height="55dp"
+                android:layout_marginTop="18dp">
 
                 <EditText
                     android:id="@+id/et_tel"
@@ -117,7 +102,7 @@
                     android:textSize="18sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_clear_tel"
+                    android:id="@+id/rl_clear_phone"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
@@ -138,10 +123,10 @@
                 </RelativeLayout>
             </RelativeLayout>
 
+            <!--验证码栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_height="55dp">
 
                 <EditText
                     android:id="@+id/et_pasw"
@@ -190,79 +175,61 @@
 
             </RelativeLayout>
 
+            <!--登录按钮-->
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/rect_green_little_rad"
                 android:text="@string/tv_login"
                 android:textColor="#ffffff"
                 android:textSize="18sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="3"/>
-
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:orientation="vertical">
+    </ScrollView>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"/>
+    <!--登录代表你同意用户协议和隐私条款-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@android:color/background_light">
 
-            <!--登录代表你同意酷狗服务和隐私条款-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+        <TextView
+            android:id="@+id/text_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_login_and_agree"
+            android:textSize="12sp"/>
 
-                <TextView
-                    android:id="@+id/text_agree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_login_and_agree"
-                    android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tv_user_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_protocol"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/text_agree"
+            android:textColor="@color/colorGreen"/>
 
-                <TextView
-                    android:id="@+id/tv_user_protocol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_protocol"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/text_agree"
-                    android:textColor="@color/colorGreen"/>
+        <TextView
+            android:id="@+id/text_and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_and"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/tv_user_protocol" />
 
-                <TextView
-                    android:id="@+id/text_and"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_and"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/tv_user_protocol" />
+        <TextView
+            android:id="@+id/tv_privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_privacy_policy"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/text_and"
+            android:textColor="@color/colorGreen"/>
 
-                <TextView
-                    android:id="@+id/tv_privacy_policy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_privacy_policy"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/text_and"
-                    android:textColor="@color/colorGreen"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

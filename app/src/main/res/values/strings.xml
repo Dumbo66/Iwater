@@ -13,7 +13,7 @@
     <string name="my_river_name">我的河道</string>
     <string name= "collection_name">我的签到</string>
     <string name="click_to_login">点击登录</string>
-    <string name="nick_name">dumbo</string>
+    <string name="nickName">XXXX</string>
     <string name="tv_notice">消息通知</string>
     <string name="tv_set">系统设置</string>
     <string name="tv_date">2018-5-1</string>
@@ -56,7 +56,7 @@
     <string name="hint_input_ver_code">请输入验证码</string>
     <string name="hint_input_your_number">请输入手机号</string>
     <string name="tv_help">帮助反馈</string>
-    <string name="tv_map_monitor">地图监测</string>
+    <string name="tv_map_monitor">云水质监测</string>
     <string name="tv_task">事件处理</string>
     <string name="tv_people_complain">群众投诉</string>
     <string name="tv_more">更多</string>
@@ -97,4 +97,5 @@
     <string name="tv_about_app">关于应用</string>
     <string name="tv_river_info">河湖信息</string>
     <string name="todo">TODO</string>
+    <string name="tv_user_info">个人资料</string>
 </resources>

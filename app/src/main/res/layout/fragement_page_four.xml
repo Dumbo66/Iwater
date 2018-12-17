@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frag_page_four"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -50,30 +51,41 @@
           android:visibility="gone"
           tools:ignore="RtlSymmetry">
 
-
          <cn.bingoogolapple.photopicker.widget.BGAImageView
              android:id="@+id/iv_avatar"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
+             android:layout_width="54dp"
+             android:layout_height="54dp"
              android:layout_marginEnd="10dp"
              android:src="@mipmap/iwater"
              android:layout_centerVertical="true"
              app:bga_iv_circle="true"/>
 
          <TextView
-             android:id="@+id/users"
+             android:id="@+id/tv_nick_name"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginStart="20dp"
-             android:layout_marginTop="16dp"
+             android:layout_marginTop="22dp"
              android:layout_toEndOf="@id/iv_avatar"
-             android:text="@string/nick_name"
+             android:text="@string/nickName"
              android:textSize="18sp" />
+
+         <TextView
+             android:id="@+id/tv_user_id"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="20dp"
+             android:layout_marginTop="10dp"
+             android:layout_toEndOf="@id/iv_avatar"
+             android:layout_below="@+id/tv_nick_name"
+             android:text="ID号：XXXX"
+             android:textSize="15sp"
+             android:textColor="@android:color/darker_gray"/>
 
          <ImageView
              android:id="@+id/qr_code"
-             android:layout_width="24dp"
-             android:layout_height="24dp"
+             android:layout_width="26dp"
+             android:layout_height="26dp"
              android:layout_alignParentEnd="true"
              android:layout_centerVertical="true"
              android:layout_marginEnd="20dp"
@@ -262,11 +274,12 @@
              android:src="@drawable/in" />
 
          <!--分隔线-->
-         <Button
+         <View
              android:layout_width="match_parent"
              android:layout_height="1dp"
              android:layout_alignParentBottom="true"
-             android:layout_marginEnd="15dp"/>
+             android:layout_marginEnd="15dp"
+             android:background="@color/color_divider"/>
 
       </RelativeLayout>
 
@@ -305,12 +318,12 @@
              android:textSize="16sp" />
 
          <!--分隔线-->
-         <Button
+         <View
              android:layout_width="match_parent"
              android:layout_height="1dp"
              android:layout_alignParentBottom="true"
-             android:layout_marginEnd="15dp"/>
-
+             android:layout_marginEnd="15dp"
+             android:background="@color/color_divider"/>
 
       </RelativeLayout>
 
@@ -382,11 +395,12 @@
              android:src="@drawable/in" />
 
          <!--分隔线-->
-         <Button
+         <View
              android:layout_width="match_parent"
              android:layout_height="1dp"
              android:layout_alignParentBottom="true"
-             android:layout_marginEnd="15dp" />
+             android:layout_marginEnd="15dp"
+             android:background="@color/color_divider"/>
       </RelativeLayout>
 
       <!--关于应用栏-->

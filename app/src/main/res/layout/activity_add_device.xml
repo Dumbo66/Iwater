@@ -2,20 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light"/>
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@android:color/background_light">
+
         <!--返回按钮-->
         <RelativeLayout
             android:id="@+id/back"
@@ -30,6 +25,7 @@
                 android:contentDescription="@string/image" />
         </RelativeLayout>
 
+        <!--标题-->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
@@ -37,151 +33,159 @@
             android:text="添加设备"
             android:layout_centerInParent="true"
             android:textSize="20sp" />
+
     </RelativeLayout>
 
     <!--分隔线-->
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/color_divider"/>
 
-    <LinearLayout
+    <!--内容栏-->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="822"
-        android:orientation="vertical">
-
-        <!--监测位置信息-->
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@color/color_background" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="30"
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:padding="4dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/rect_white_little_rad">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <!--监测位置信息-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="30"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="4dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rect_white_little_rad">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="监测位置"
+                            android:textSize="16sp"
+                            android:layout_centerVertical="true"/>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_background"/>
 
                 <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="监测位置"
-                        android:textSize="16sp"
+                        android:text="经度：117.346453"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_background"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="纬度：39.234567"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/color_background"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="地址：天津市北辰区河北工业大学熙湖"
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="经度：117.346453"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+                android:layout_weight="35"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="4dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/rect_white_little_rad">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
+            </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="纬度：39.234567"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+                android:layout_weight="35"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="4dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/rect_white_little_rad">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="地址：天津市北辰区河北工业大学熙湖"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="35"
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:padding="4dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/rect_white_little_rad">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="35"
-            android:orientation="vertical"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:padding="4dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/rect_white_little_rad">
-
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <!--添加按钮栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="80">
+        android:layout_height="50dp"
+        android:gravity="center">
 
+        <!--添加按钮-->
         <RelativeLayout
             android:id="@+id/rl_add_device"
             android:layout_width="120dp"
-            android:layout_height="38dp"
-            android:layout_marginBottom="4dp"
-            android:layout_alignParentBottom="true"
+            android:layout_height="40dp"
             android:background="@drawable/rect_green_big_rad"
-            android:layout_centerInParent="true"
             android:gravity="center">
-
             <TextView
                 android:id="@+id/tv_add_device"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添加"
+                android:text="tv_add"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:layout_marginStart="4dp"
-                android:layout_centerVertical="true" />
-
+                android:textSize="18sp"/>
         </RelativeLayout>
 
     </RelativeLayout>

@@ -16,7 +16,7 @@ import com.app.dumbo.iwater.R;
  **/
 
 @SuppressLint("Registered")
-public class AnimFadeActivity extends WithBackActivity {
+public class AnimFadeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

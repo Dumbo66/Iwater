@@ -29,10 +29,9 @@ import com.app.dumbo.iwater.activity.superClass.BaseMapActivity;
 import com.app.dumbo.iwater.constant.ResponseCode;
 import com.app.dumbo.iwater.retrofit2.Retrofit2;
 import com.app.dumbo.iwater.retrofit2.entity.MobileData;
-import com.app.dumbo.iwater.retrofit2.entity.MobileDataReception;
-import com.app.dumbo.iwater.retrofit2.entity.Reception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.MobileDataReception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.Reception;
 import com.app.dumbo.iwater.util.CommonUtil;
-import com.app.dumbo.iwater.util.DataDecodeUtil;
 import com.app.dumbo.iwater.util.MapUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.map.BaiduMap;
@@ -42,9 +41,13 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.model.LatLng;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,6 +64,8 @@ import retrofit2.Response;
 
 @SuppressLint("Registered")
 public class MobileMonitorActivity extends BaseMapActivity {
+    boolean isFirstLoc = true; // 是否首次定位
+
     private MapView myMapView =null;//Baidu地图View
     private BaiduMap myBaiduMap=null;
 
@@ -75,7 +80,7 @@ public class MobileMonitorActivity extends BaseMapActivity {
     private TextView tvPostData;
     private MobileData mobileData;
 
-    private TextView tvTem,tvPh,tvTur,tvDio,tvCon,tvGad;
+    private TextView tvTem,tvPh,tvTur, tvDio, tvCon,tvGad;
 
     private TextView tvLat,tvLng;//滑窗显示经纬度
     private TextView tvAddress;
@@ -107,16 +112,31 @@ public class MobileMonitorActivity extends BaseMapActivity {
 
     InfoWindow.OnInfoWindowClickListener listener;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_mobile_monitor);
         super.onCreate(savedInstanceState);
 
-        //控件初始化
-        initView();
+        //获取年月日
+        Calendar calendar = Calendar.getInstance();
+        int thisYear = calendar.get(Calendar.YEAR);
+        int thisMonth = (calendar.get(Calendar.MONTH) + 1);
+        int thisDay = calendar.get(Calendar.DAY_OF_MONTH);
+        date=thisYear +"-"+ thisMonth +"-"+ thisDay;
+        tvDate.setText("日期："+date);
 
-        //控件监听
-        listenWidget();
+        myBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                sv.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public boolean onMapPoiClick(MapPoi mapPoi) {
+                return false;
+            }
+        });
 
         //设置定位监听器
         MyLocationListener myLocationListener =new MyLocationListener();
@@ -139,17 +159,22 @@ public class MobileMonitorActivity extends BaseMapActivity {
         bluetoothAdapter.startDiscovery();
 
         //注册设备被发现时的广播
-        final IntentFilter intentFilter1=new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(myReceiver,intentFilter1);
+        final IntentFilter intentFilter=new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(myReceiver,intentFilter);
 
         setRxThread();
 
         callData(date);//请求数据
-
     }
 
-    /**控件初始化*/
-    public void initView(){
+    @Override
+    public void initView() {
+        super.initView();
+        //地图初始化
+        myMapView= findViewById(R.id.myMapView);
+        myBaiduMap=myMapView.getMap();
+
+        //内容栏
         rlEmpty =findViewById(R.id.rl_empty);
         sv=findViewById(R.id.sv);
         rlBluetooth = findViewById(R.id.rl_bluetooth);
@@ -163,94 +188,72 @@ public class MobileMonitorActivity extends BaseMapActivity {
         tvTem=findViewById(R.id.tv_tem);
         tvPh=findViewById(R.id.tv_ph);
         tvTur=findViewById(R.id.tv_tur);
-        tvDio=findViewById(R.id.tv_dio);
-        tvCon=findViewById(R.id.tv_con);
+        tvDio =findViewById(R.id.tv_dio);
+        tvCon =findViewById(R.id.tv_con);
         tvGad=findViewById(R.id.tv_gad);
 
         postData=findViewById(R.id.rl_post_data);
         tvPostData=findViewById(R.id.tv_post_data);
-
-        //获取年月日
-        Calendar calendar = Calendar.getInstance();
-        int thisYear = calendar.get(Calendar.YEAR);
-        int thisMonth = (calendar.get(Calendar.MONTH) + 1);
-        int thisDay = calendar.get(Calendar.DAY_OF_MONTH);
-        date=thisYear +"-"+ thisMonth +"-"+ thisDay;
-        tvDate.setText("日期："+date);
-
-        //地图初始化
-        myMapView= findViewById(R.id.myMapView);
-        myBaiduMap=myMapView.getMap();
     }
 
-    /**控件监听*/
-    private void listenWidget() {
-        rlEmpty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void setListener() {
+        super.setListener();
+        rlEmpty.setOnClickListener(this);
+        rlDate.setOnClickListener(this);
+        rlBluetooth.setOnClickListener(this);
+        postData.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch(v.getId()){
+            //空白框监听
+            case R.id.rl_empty:
                 sv.setVisibility(View.GONE);
-            }
-        });
+                break;
 
-        rlDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //选择日期监听
+            case R.id.rl_date:
                 showDatePickerDialog();
-            }
-        });
+                break;
 
-        myBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                sv.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public boolean onMapPoiClick(MapPoi mapPoi) {
-                return false;
-            }
-        });
-
-        rlBluetooth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //蓝牙按钮监听
+            case R.id.rl_bluetooth:
                 Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-            }
-        });
+                break;
 
-        postData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //上传数据监听
+            case R.id.rl_post_data:
                 tvPostData.setText("上传中……");
-
-                Call<Reception> postDataCall= Retrofit2.getService().postMobileData(mobileData);
-                postDataCall.enqueue(new retrofit2.Callback<Reception>() {
-                    @Override
-                    public void onResponse(Call<Reception> call, Response<Reception> response) {
-                        int code=response.body().getCode();
-                        if(code== ResponseCode.OK){
-                            tvPostData.setText("上传数据");
-                            Toast.makeText(MobileMonitorActivity.this,
-                                    "上传移动监测数据成功！",Toast.LENGTH_LONG).show();
-                            System.out.println("上传移动监测数据成功！");
-                            myBaiduMap.clear();
-                            callData(date);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Reception> call, Throwable t) {
-                        tvPostData.setText("上传数据");
-                        Toast.makeText(MobileMonitorActivity.this,
-                                "上传移动监测数据失败！",Toast.LENGTH_LONG).show();
-                        System.out.println("上传移动监测数据失败！");
-                    }
-                });
-            }
-        });
+                postData();
+                break;
+        }
     }
+
+    private BroadcastReceiver myReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            //搜索
+            if (Objects.equals(action, BluetoothDevice.ACTION_FOUND)) {
+                device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if(device.getBondState()==BluetoothDevice.BOND_BONDED){//已配对设备
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  "+device.getName());
+                    System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  "+device.getAddress());
+
+                    rxThread.start();
+
+                    bluetoothAdapter.cancelDiscovery();
+//                    AcceptThread txThread=new AcceptThread();
+//                    txThread.start();
+                }
+            }
+        }
+    };
 
     private void setRxThread() {
         rxThread=new Thread(new Runnable() {
@@ -277,9 +280,10 @@ public class MobileMonitorActivity extends BaseMapActivity {
                         outputStream.write(CommonUtil.getHexBytes(tx));
                         outputStream.flush();
 
+                        //循环读取数据
                         while(true){
                             inputStream=btSocket.getInputStream();
-                            byte[] buffer = new byte[1024];
+                            byte[] buffer = new byte[300];
                             while(inputStream.available()>0){
                                 try {
                                     Thread.sleep(1000);
@@ -287,27 +291,70 @@ public class MobileMonitorActivity extends BaseMapActivity {
                                     e.printStackTrace();
                                 }
                                 int count = inputStream.read(buffer);
-                                String rxData=CommonUtil.bytesToHexStr(buffer,0,count);
-                                MobileData mobileData= DataDecodeUtil.decodeMobileData(rxData);
-                                Date date=new Date(System.currentTimeMillis());
-                                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                String rxDataTemp=new String(buffer);
+                                System.out.println("222222222222222222222"+rxDataTemp);
+                                String[] ss=rxDataTemp.split("\\}");
+                                String rxDataStr=ss[0]+"}";
+                                System.out.println("111111111111111111111111111111"+rxDataStr);
+                                try {
+                                    JSONObject jsonObject=new JSONObject(rxDataStr);
 
-                                Message msg=new Message();
-                                Bundle b=new Bundle();
-                                b.putString("time",sdf.format(date));
-                                b.putFloat("tem",mobileData.getTemperature());
-                                b.putFloat("ph",(mobileData.getPh()));
-                                b.putFloat("dio",(float) 1.00);
-                                b.putFloat("tur",(mobileData.getTurbidity()));
-                                b.putFloat("con",(float) 1.00);
-                                msg.setData(b);
-                                btHandler.sendMessage(msg);
+                                    //获取当前时间
+                                    Date date=new Date(System.currentTimeMillis());
+                                    @SuppressLint("SimpleDateFormat")
+                                    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                                    Message msg=new Message();
+                                    Bundle b=new Bundle();
+                                    b.putString("time",sdf.format(date));
+
+                                    //伪造温度
+                                    float waterTem= (float) (26+Math.random());
+                                    DecimalFormat df=new DecimalFormat("#.00");
+                                    b.putFloat("temperature", Float.parseFloat(df.format(waterTem)));
+//                                    b.putFloat("temperature", (float) jsonObject.getDouble("temperature"));
+                                    b.putFloat("ph", (float) jsonObject.getDouble("ph"));
+                                    b.putFloat("dissolvedOxygen", (float) jsonObject.getDouble("dissolvedOxygen"));
+                                    b.putFloat("conductivity", (float) jsonObject.getDouble("conductivity"));
+                                    b.putFloat("turbidity", (float) jsonObject.getDouble("turbidity"));
+                                    msg.setData(b);
+                                    btHandler.sendMessage(msg);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+            }
+        });
+    }
+
+    /**上传数据*/
+    private void postData() {
+        Call<Reception> postDataCall= Retrofit2.getService().postMobileData(mobileData);
+        postDataCall.enqueue(new Callback<Reception>() {
+            @Override
+            public void onResponse(Call<Reception> call, Response<Reception> response) {
+                int code=response.body().getCode();
+                if(code== ResponseCode.OK){
+                    tvPostData.setText("上传数据");
+                    Toast.makeText(MobileMonitorActivity.this,
+                            "上传移动监测数据成功！",Toast.LENGTH_LONG).show();
+                    System.out.println("上传移动监测数据成功！");
+                    myBaiduMap.clear();
+                    callData(date);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Reception> call, Throwable t) {
+                tvPostData.setText("上传数据");
+                Toast.makeText(MobileMonitorActivity.this,
+                        "上传移动监测数据失败！",Toast.LENGTH_LONG).show();
+                System.out.println("上传移动监测数据失败！");
             }
         });
     }
@@ -319,10 +366,10 @@ public class MobileMonitorActivity extends BaseMapActivity {
             @Override
             public void onResponse(Call<MobileDataReception> call, Response<MobileDataReception> response) {
                 System.out.println("请求数据成功！");
-                Toast.makeText(MobileMonitorActivity.this,"请求数据成功！",Toast.LENGTH_SHORT).show();
                 myBaiduMap.clear();
+                System.out.println(response.body().getCode());
 
-                dataCount=response.body().getData().size();
+                dataCount= response.body().getData().size();
 
                 final int[] s=new int[dataCount];
                 double[] lat=new double[dataCount];
@@ -368,7 +415,6 @@ public class MobileMonitorActivity extends BaseMapActivity {
 
             @Override
             public void onFailure(Call<MobileDataReception> call, Throwable t) {
-                Toast.makeText(MobileMonitorActivity.this,"请求数据失败！",Toast.LENGTH_SHORT).show();
                 System.out.println("请求数据失败！");
                 System.out.println(t.getMessage());
             }
@@ -380,7 +426,7 @@ public class MobileMonitorActivity extends BaseMapActivity {
     private void showInfoWindow(LatLng latLng,float dio,
                                 float tur, float ph, float con, float tem , char gad) {
         LayoutInflater inflater=LayoutInflater.from(getApplicationContext());
-        View view=inflater.inflate(R.layout.window_data_info,null);
+        View view=inflater.inflate(R.layout.window_water_data_info,null);
 
         TextView title= view.findViewById(R.id.title);
         TextView tv_dio= view.findViewById(R.id.tv_dio);
@@ -441,25 +487,6 @@ public class MobileMonitorActivity extends BaseMapActivity {
         myBaiduMap.showInfoWindow(mInfoWindow);
     }
 
-    private BroadcastReceiver myReceiver=new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            //搜索
-            if (Objects.equals(action, BluetoothDevice.ACTION_FOUND)) {
-                device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if(device.getBondState()==BluetoothDevice.BOND_BONDED){//已配对设备
-                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  "+device.getName());
-                    System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb  "+device.getAddress());
-
-                    rxThread.start();
-//                    AcceptThread txThread=new AcceptThread();
-//                    txThread.start();
-                }
-            }
-        }
-    };
-
     /**创建Handler将子线程中数据发给主线程*/
     private class BtHandler extends android.os.Handler{
         @SuppressLint("SetTextI18n")
@@ -472,30 +499,29 @@ public class MobileMonitorActivity extends BaseMapActivity {
             mobileData=new MobileData();
 
             String time=bundle.getString("time");
-            float tem=bundle.getFloat("tem");
+            float tem=bundle.getFloat("temperature");
             float ph=bundle.getFloat("ph");
-            float dio=bundle.getFloat("dio");
-            float tur=bundle.getFloat("tur");
-            float con=bundle.getFloat("con");
+            float dio=bundle.getFloat("dissolvedOxygen");
+            float con=bundle.getFloat("conductivity");
+            float tur=bundle.getFloat("turbidity");
 
-            tvTem.setText(tem+"℃");
+            tvTem.setText(tem+" ℃");
             tvPh.setText(""+ph);
-            tvTur.setText(tur+"NTU");
-//            tvDio.setText(dio+"mg/L");
-//            tvCon.setText(con+"μS/cm");
+            tvTur.setText(tur+" NTU");
+            tvDio.setText(con+" mg/L");
+            tvCon.setText(dio+" μS/cm");
 //            tvGad.setText("B");
 
             mobileData.setRecordTime(time);
             mobileData.setTemperature(tem);
             mobileData.setPh(ph);
-            mobileData.setDissolvedOxygen(dio);
-            mobileData.setTurbidity(tur);
-            mobileData.setConductivity(con);
+            mobileData.setDissolvedOxygen(con);
+            mobileData.setTurbidity(dio);
+            mobileData.setConductivity(tur);
             mobileData.setLatBd09ll(myCurrentLat);
             mobileData.setLngBd09ll(myCurrentLng);
         }
     }
-
 
     private class MyLocationListener extends BaseLocationListener{
         @Override
@@ -504,11 +530,18 @@ public class MobileMonitorActivity extends BaseMapActivity {
             myCurrentLat=getLatLng().latitude;
             myCurrentLng=getLatLng().longitude;
             LatLng latLng_bd09=new LatLng(myCurrentLat,myCurrentLng);
+            tvLat.setText("纬度："+myCurrentLat);
+            tvLng.setText("经度："+myCurrentLng);
             //坐标转换
             LatLng latLng_gcj02= MapUtil.convertBd09ToGcj02(latLng_bd09);
             //获取高德地址
             String address=MapUtil.getGaodeAddress(latLng_gcj02);
             tvAddress.setText("地址："+address);
+
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                setZoom(getLatLng(),15.0f);//设置图的尺寸
+            }
         }
     }
 

@@ -1,6 +1,8 @@
 package com.app.dumbo.iwater.retrofit2.entity;
 
 public class MobileData {
+    private Integer mobileDataId;
+
     private Double latBd09ll;
 
     private Double lngBd09ll;
@@ -18,6 +20,14 @@ public class MobileData {
     private Float turbidity;
 
     private char grade;
+
+    public Integer getMobileDataId() {
+        return mobileDataId;
+    }
+
+    public void setMobileDataId(Integer mobileDataId) {
+        this.mobileDataId = mobileDataId;
+    }
 
     public Double getLatBd09ll() {
         return latBd09ll;

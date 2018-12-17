@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light">
-
-    </RelativeLayout>
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="45dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="66"
         android:background="@drawable/rect_white_little_rad">
 
+        <!--返回按钮-->
         <RelativeLayout
             android:id="@+id/back"
             android:layout_width="45dp"
             android:layout_height="match_parent">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/clear" />
-
         </RelativeLayout>
 
+        <!--标题-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,19 +34,18 @@
             android:text="我的应用"
             android:textSize="20sp" />
 
+        <!--编辑按钮-->
         <RelativeLayout
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="编辑"
                 android:textSize="18sp" />
-
         </RelativeLayout>
 
     </RelativeLayout>
@@ -64,12 +54,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="902"
+        android:layout_weight="1"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp"
         android:fillViewport="true"
-        android:scrollbars="none">
-
+        android:scrollbars="none"
+        android:background="@color/color_background" >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,112 +82,228 @@
                     android:textSize="15sp" />
 
                 <LinearLayout
+                    android:id="@+id/menu"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="3">
+                    android:layout_height="162dp"
+                    android:background="@android:color/background_light"
+                    android:orientation="vertical">
 
-                    <!--地图监测-->
-                    <RelativeLayout
-                        android:id="@+id/rl_map_monitor"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                    <!--菜单栏第一列-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="@drawable/clicked_color_gray"
-                        tools:ignore="NestedWeights">
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/iv_map_monitor"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/map_monitor"
-                            android:contentDescription="@string/click_to_login" />
+                        <!--地图监测-->
+                        <RelativeLayout
+                            android:id="@+id/rl_map_monitor"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_map_monitor"
-                            android:layout_centerInParent="true"
-                            android:text="@string/tv_map_monitor" />
+                            <ImageView
+                                android:id="@+id/image_monitor"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/map_monitor" />
 
-                    </RelativeLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_monitor"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_map_monitor"
+                                android:textSize="13sp" />
 
-                    <!--移动监测-->
-                    <RelativeLayout
-                        android:id="@+id/rl_mobile_monitor"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        </RelativeLayout>
+
+                        <!--移动监测-->
+                        <RelativeLayout
+                            android:id="@+id/rl_mobile_monitor"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/image_mobile_device"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/mobile_monitor" />
+
+                            <TextView
+                                android:id="@+id/tv_mobile_device"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_mobile_device"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_mobile_monitor"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <!--河湖巡查-->
+                        <RelativeLayout
+                            android:id="@+id/rl_river_patrol"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/image_patrol"
+                                android:layout_width="46dp"
+                                android:layout_height="46dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/river_patrol" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_patrol"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_river_patrol"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <!--问题记录-->
+                        <RelativeLayout
+                            android:id="@+id/rl_problem_record"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/image_note"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/problem_record" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_note"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_problem_record"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <!--菜单栏第二列-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/clicked_color_gray"
-                        android:gravity="center">
+                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/iv_mobile_monitor"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/mobile_monitor" />
+                        <!--待办事宜-->
+                        <RelativeLayout
+                            android:id="@+id/rl_undo_task"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_mobile_monitor"
-                            android:layout_centerInParent="true"
-                            android:text="@string/tv_mobile_monitor" />
+                            <ImageView
+                                android:id="@+id/image_task"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/undo_task" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_task"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_task"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <!--事件督办-->
+                        <RelativeLayout
+                            android:id="@+id/rl_river_info"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/image_supervision"
+                                android:layout_width="46dp"
+                                android:layout_height="46dp"
+                                android:layout_alignStart="@+id/textView3"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/recorder" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_supervision"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_river_info"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <!--政策法规-->
+                        <RelativeLayout
+                            android:id="@+id/rl_policy"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/image_people"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/policy" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/image_people"
+                                android:layout_centerInParent="true"
+                                android:text="@string/tv_policy"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+                        <!--政策法规-->
+                        <RelativeLayout
+                            android:id="@+id/rl_policy"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/clicked_color_gray"
+                            android:gravity="center_vertical">
+
+                        </RelativeLayout>
 
 
-                    </RelativeLayout>
-
-                    <!--河湖巡查-->
-                    <RelativeLayout
-                        android:id="@+id/rl_river_patrol"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/clicked_color_gray"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/iv_patrol"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/river_patrol" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_patrol"
-                            android:layout_centerInParent="true"
-                            android:text="@string/tv_river_patrol" />
-
-                    </RelativeLayout>
-
-                    <!--问题记录-->
-                    <RelativeLayout
-                        android:id="@+id/rl_problem_record"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/clicked_color_gray"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/iv_note"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/problem_record" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/iv_note"
-                            android:layout_centerInParent="true"
-                            android:text="@string/tv_problem_record" />
-
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -214,23 +320,19 @@
                         android:layout_weight="1"
                         android:background="@drawable/clicked_color_gray"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/iv_undo_task"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/undo_task" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/iv_undo_task"
                             android:layout_centerInParent="true"
                             android:text="@string/tv_task" />
-
                     </RelativeLayout>
-
 
                     <RelativeLayout
                         android:id="@+id/rl_policy"
@@ -239,7 +341,6 @@
                         android:layout_weight="1"
                         android:background="@drawable/clicked_color_gray"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/iv_people"
                             android:layout_width="48dp"
@@ -247,14 +348,12 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/people_complain" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/iv_people"
                             android:layout_centerInParent="true"
                             android:text="@string/tv_people_complain" />
-
                     </RelativeLayout>
 
                     <!--事件督办-->
@@ -265,21 +364,18 @@
                         android:layout_weight="1"
                         android:background="@drawable/clicked_color_gray"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/iv_supervision"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/supervision" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/iv_supervision"
                             android:layout_centerInParent="true"
                             android:text="事件督办" />
-
                     </RelativeLayout>
 
                     <View
@@ -317,21 +413,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/recorder" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="@string/tv_river_info" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -339,21 +432,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/water_quality" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="@string/tv_water_quality_info" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -361,21 +451,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/river_chief" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="我的河长" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -416,21 +503,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/image_iclass"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/news" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/image_iclass"
                             android:layout_centerInParent="true"
                             android:text="河长快讯" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -438,7 +522,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/image_mooc"
                             android:layout_width="48dp"
@@ -446,14 +529,12 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:src="@drawable/dynamic" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/image_mooc"
                             android:layout_centerInParent="true"
                             android:text="巡河动态" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -461,21 +542,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/experience" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="经验交流" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -483,7 +561,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
@@ -497,7 +574,6 @@
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="政策法规" />
-
                     </RelativeLayout>
 
                 </LinearLayout>
@@ -512,21 +588,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/policy" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="通知" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -534,21 +607,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/policy" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="通知" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -599,21 +669,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/image_career_talk"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/flag" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/image_career_talk"
                             android:layout_centerInParent="true"
                             android:text="治理目标" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -621,14 +688,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/image_job"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/grade" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -636,7 +701,6 @@
                             android:layout_centerInParent="true"
                             android:layout_marginTop="-3dp"
                             android:text="考核评估" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -644,21 +708,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/club" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="通知" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -666,24 +727,19 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/medal" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="获得成就" />
-
                     </RelativeLayout>
-
-
 
                 </LinearLayout>
 
@@ -697,14 +753,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/medal" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -719,21 +773,18 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center">
-
                         <ImageView
                             android:id="@+id/notice"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:layout_centerInParent="true"
                             android:src="@drawable/policy" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/notice"
                             android:layout_centerInParent="true"
                             android:text="通知" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -758,7 +809,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

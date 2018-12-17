@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@android:color/background_light">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/clicked_color_gray">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/clear"
+                android:contentDescription="@string/image"/>
+        </RelativeLayout>
+
+        <!--标题-->
+        <TextView
+            android:id="@+id/tv_userIofo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_user_info"
+            android:layout_centerInParent="true"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <!--分隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_divider"/>
+
+    <!--内容栏-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@color/color_background" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--头像栏-->
+            <RelativeLayout
+                android:id="@+id/rl_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="头像"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in1"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/in" />
+
+                <cn.bingoogolapple.photopicker.widget.BGAImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:layout_toStartOf="@+id/iv_in1"
+                    android:layout_marginEnd="8dp"
+                    android:src="@mipmap/iwater"
+                    android:layout_centerVertical="true"
+                    app:bga_iv_circle="true"/>
+            </RelativeLayout>
+
+            <!--昵称栏-->
+            <RelativeLayout
+                android:id="@+id/rl_nick_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="昵称"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/in" />
+
+                <TextView
+                    android:id="@+id/tv_nick_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_in2"
+                    android:layout_marginEnd="12dp"
+                    android:text="待完善"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!--用户ID-->
+            <RelativeLayout
+                android:id="@+id/rl_user_id"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="ID号"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in3"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp" />
+
+                <TextView
+                    android:id="@+id/tv_user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_in3"
+                    android:layout_marginEnd="12dp"
+                    android:text="XXXX"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!--性别栏-->
+            <RelativeLayout
+                android:id="@+id/rl_sex"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="性别"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in4"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/in" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_in4"
+                    android:layout_marginEnd="12dp"
+                    android:text="待完善"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!--生日栏-->
+            <RelativeLayout
+                android:id="@+id/rl_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="生日"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in5"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/in" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_in5"
+                    android:layout_marginEnd="12dp"
+                    android:text="待完善"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <!--地区栏-->
+            <RelativeLayout
+                android:id="@+id/rl_address"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/clicked_color_gray"
+                android:paddingStart="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="地区"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_in6"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/in" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@+id/iv_in6"
+                    android:layout_marginEnd="12dp"
+                    android:text="待完善"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

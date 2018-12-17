@@ -1,44 +1,50 @@
 package com.app.dumbo.iwater.retrofit2.entity;
 
+import java.util.Date;
+
 /**
- * Created by dumbo on 2018/4/12.
- */
+ * --用户实体类--
+ *
+ * Created by Dumbo on 2018/4/22
+ **/
 
 public class Users {
     private String phone;
 
-    private int id;
+    private Integer userId;
 
-    private String name;
+    private String nickName;
 
     private String sex;
 
-    private int age;
+    private Date birthday;
 
     private String password;
+
+    private String iconUrl;
 
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
-    public int getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getSex() {
@@ -46,15 +52,15 @@ public class Users {
     }
 
     public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+        this.sex = sex;
     }
 
-    public Integer getAge() {
-        return age;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     public String getPassword() {
@@ -62,6 +68,14 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }

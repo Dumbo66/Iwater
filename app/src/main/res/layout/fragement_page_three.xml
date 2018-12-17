@@ -43,11 +43,13 @@ android:scrollbars="none">
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/in" />
 
-            <Button
+            <!--分隔线-->
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:background="@color/color_divider"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15dp"/>
+                android:layout_marginEnd="15dp" />
         </RelativeLayout>
 
         <!--消息通知栏-->
@@ -83,11 +85,13 @@ android:scrollbars="none">
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/in" />
 
-            <Button
+            <!--分隔线-->
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:background="@color/color_divider"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15dp"/>
+                android:layout_marginEnd="15dp" />
         </RelativeLayout>
 
         <!--群众投诉栏-->
@@ -123,11 +127,13 @@ android:scrollbars="none">
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/in" />
 
-            <Button
+            <!--分隔线-->
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:background="@color/color_divider"
                 android:layout_alignParentBottom="true"
-                android:layout_marginEnd="15dp"/>
+                android:layout_marginEnd="15dp" />
         </RelativeLayout>
 
         <!--消息通知栏-->

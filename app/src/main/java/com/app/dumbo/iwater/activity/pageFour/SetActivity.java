@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.app.dumbo.iwater.R;
 import com.app.dumbo.iwater.activity.MainActivity;
-import com.app.dumbo.iwater.activity.superClass.WithBackActivity;
+import com.app.dumbo.iwater.activity.superClass.BaseActivity;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -19,7 +19,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by dumbo on 2017/10/27.
  */
 
-public class SetActivity extends WithBackActivity {
+public class SetActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_set);
@@ -35,6 +35,24 @@ public class SetActivity extends WithBackActivity {
         });
     }
 
+    @Override
+    public void initView() {
+        super.initView();
+
+    }
+
+    @Override
+    public void setListener() {
+        super.setListener();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+
+    }
+
     /*显示退出登录对话框*/
     private void showExitLoginDialog() {
         new SweetAlertDialog(SetActivity.this)
@@ -44,11 +62,14 @@ public class SetActivity extends WithBackActivity {
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        SharedPreferences sp=getSharedPreferences("jwt", Context.MODE_PRIVATE);
+                        SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor=sp.edit();
-                        editor.remove("postAccessJwt");
-                        editor.remove("postRefreshJwt");
-                        editor.commit();
+                        editor.remove("access_jwt");
+                        editor.remove("refresh_jwt");
+                        editor.remove("user_id");
+                        editor.remove("nick_name");
+                        editor.remove("avatar_url");
+                        editor.apply();
 
                         //Activity跳转
                         Intent intent=new Intent(SetActivity.this,MainActivity.class);

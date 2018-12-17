@@ -10,8 +10,8 @@ import java.util.ArrayList;
  **/
 
 public class Moment implements Parcelable {
-    public String avatar;
-    public String userName;
+    public String avatarUrl;
+    public String nickName;
     public String time;
     public String content;
     public ArrayList<String> photos;
@@ -24,8 +24,8 @@ public class Moment implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.avatar);
-        dest.writeString(this.userName);
+        dest.writeString(this.avatarUrl);
+        dest.writeString(this.nickName);
         dest.writeString(this.time);
         dest.writeString(this.content);
         dest.writeStringList(this.photos);
@@ -35,10 +35,10 @@ public class Moment implements Parcelable {
     public Moment() {
     }
 
-    public Moment(String avatar,String userName,String time,
+    public Moment(String avatarUrl, String nickName, String time,
                   String content, ArrayList<String> photos, String address) {
-        this.avatar=avatar;
-        this.userName=userName;
+        this.avatarUrl = avatarUrl;
+        this.nickName = nickName;
         this.time=time;
         this.content = content;
         this.photos = photos;
@@ -46,8 +46,8 @@ public class Moment implements Parcelable {
     }
 
     protected Moment(Parcel in) {
-        this.avatar=in.readString();
-        this.userName=in.readString();
+        this.avatarUrl =in.readString();
+        this.nickName =in.readString();
         this.time=in.readString();
         this.content = in.readString();
         this.photos = in.createStringArrayList();

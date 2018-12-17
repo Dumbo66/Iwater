@@ -1,5 +1,6 @@
 package com.app.dumbo.iwater.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,25 +27,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.fragment.PageFourFragment;
-import com.app.dumbo.iwater.activity.fragment.PageOneFragment;
-import com.app.dumbo.iwater.activity.fragment.PageThreeFragment;
-import com.app.dumbo.iwater.activity.fragment.PageTwoFragment;
+import com.app.dumbo.iwater.fragment.PageFourFragment;
+import com.app.dumbo.iwater.fragment.PageOneFragment;
+import com.app.dumbo.iwater.fragment.PageThreeFragment;
+import com.app.dumbo.iwater.fragment.PageTwoFragment;
 import com.app.dumbo.iwater.activity.pageOne.AddMomentActivity;
 import com.app.dumbo.iwater.activity.pageOne.ScanActivity;
+import com.app.dumbo.iwater.constant.RequestCode;
 import com.app.dumbo.iwater.constant.ResponseCode;
 import com.app.dumbo.iwater.retrofit2.Retrofit2;
-import com.app.dumbo.iwater.retrofit2.entity.JwtReception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.JwtReception;
 import com.app.dumbo.iwater.util.CommonUtil;
+import com.app.dumbo.iwater.util.PermissionUtil;
 import com.baidu.mapapi.SDKInitializer;
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.jaeger.library.StatusBarUtil;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //标题栏控件
     private TextView tvTitle;//标题栏标题
     private RelativeLayout scan,search,add,contact, camera;//消息通知按钮
+    private SweetAlertDialog requestCameraPermDialog;
 
     //内容栏控件
     private ViewPager viewPager;
@@ -63,13 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RelativeLayout netState;//网络状态栏
     private NetworkChangeReceiver networkChangeReceiver;//网络状态接收广播
 
-    private RelativeLayout logOut;//登出
-    private RelativeLayout logIn;//登入
-
     //导航栏控件
+    private LinearLayout rlPageOne,rlPageTwo,rlPageThree,rlPageFour;//导航栏4按钮
     private ImageView ivPageOne, ivPageTwo, ivPageThree, ivPageFour;//导航栏4按钮图标
     private TextView tvPageOne, tvPageTwo, tvPageThree, tvPageFour;//导航栏4按钮文字
 
+    @SuppressLint("CheckResult")
     protected void onCreate(Bundle savedInstanceState) {
         //注意该方法要再setContentView方法之前实现
         SDKInitializer.initialize(getApplicationContext());
@@ -79,20 +85,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //控件初始化
         initView();
 
+        //权限请求
+        RxPermissions rxPermissions=new RxPermissions(this);
+        rxPermissions.requestEach(Manifest.permission.ACCESS_FINE_LOCATION,
+                                  Manifest.permission.CAMERA,
+                                  Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) {
+                        if (permission.granted) {
+                        } else {
+                        }
+                    }
+                });
+
+        //设置监听
+        setListener();
+
         //设置ViewPager
         setViewPager();
 
         //检测网络连接状态
         checkNetConnectState();
 
-        //接收来自登录页面跳转值并跳到第4页
-        getIntentFromLoginActivity();
-
         //保持登录
         keepLoginState();
+
+        //接收来自登录页面跳转值并跳到第4页
+        Intent it=getIntent();//Activity间传值
+        int page=it.getIntExtra("page",0);
+        viewPager.setCurrentItem(page);
     }
 
     private void initView() {
+        //设置状态栏颜色
+        StatusBarUtil.setColorForSwipeBack(this,getResources().getColor(R.color.colorClickedBack), 0);
+
         //标题栏
         tvTitle =  findViewById(R.id.headText);
         scan = findViewById(R.id.rl_scan);
@@ -101,18 +129,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         add=findViewById(R.id.rl_add);
         contact=findViewById(R.id.rl_contact);
 
-        scan.setOnClickListener(this);
-        camera.setOnClickListener(this);
-
         //内容栏
         netState = findViewById(R.id.rl_net_state);
         viewPager = findViewById(R.id.view_pager);
 
         //导航栏
-        LinearLayout rlPageOne =  findViewById(R.id.rl_page_one);
-        LinearLayout rlPageTwo = findViewById(R.id.rl_page_two);
-        LinearLayout rlPageThree =  findViewById(R.id.rl_page_three);
-        LinearLayout rlPageFour =  findViewById(R.id.rl_page_four);
+        rlPageOne=  findViewById(R.id.rl_page_one);
+        rlPageTwo = findViewById(R.id.rl_page_two);
+        rlPageThree =  findViewById(R.id.rl_page_three);
+        rlPageFour =  findViewById(R.id.rl_page_four);
 
         ivPageOne =findViewById(R.id.iv_page_one);
         ivPageTwo =findViewById(R.id.iv_page_two);
@@ -123,11 +148,119 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvPageTwo =  findViewById(R.id.tv_page_two);
         tvPageThree = findViewById(R.id.tv_page_three);
         tvPageFour = findViewById(R.id.tv_page_four);
+    }
 
-        rlPageOne.setOnClickListener(this);
-        rlPageTwo.setOnClickListener(this);
-        rlPageThree.setOnClickListener(this);
-        rlPageFour.setOnClickListener(this);
+   public void setListener(){
+       scan.setOnClickListener(this);
+       camera.setOnClickListener(this);
+
+       rlPageOne.setOnClickListener(this);
+       rlPageTwo.setOnClickListener(this);
+       rlPageThree.setOnClickListener(this);
+       rlPageFour.setOnClickListener(this);
+   }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            //“扫描”按钮监听事件
+            case R.id.rl_scan:
+                requestCameraPermToScan();//请求权限后打开扫描
+                break;
+
+            //“相机”按钮监听事件
+            case R.id.rl_camera:
+                CommonUtil.skipActivityByFade(this,AddMomentActivity.class);
+                break;
+
+            //“首页”按钮监听事件
+            case R.id.rl_page_one:
+                viewPager.setCurrentItem(0);//跳转到第1页
+                setPageOneWidget();//改变按钮状态
+                break;
+
+            //“动态”按钮监听事件
+            case R.id.rl_page_two:
+                viewPager.setCurrentItem(1);//跳转到第2页
+                setPageTwoWidget();//改变按钮状态
+                break;
+
+            //“消息”按钮监听事件
+            case R.id.rl_page_three:
+                viewPager.setCurrentItem(2);//跳转到第3页
+                setPageThreeWidget();//改变按钮状态
+                break;
+
+            //“我的"按钮监听事件
+            case R.id.rl_page_four:
+                viewPager.setCurrentItem(3);//跳转到第4页
+                setPageFourWidget();//改变按钮状态
+                break;
+        }
+    }
+
+    /** 请求权限后打开扫描*/
+    @SuppressLint("CheckResult")
+    private void requestCameraPermToScan() {
+        RxPermissions rxPermissions=new RxPermissions(MainActivity.this);
+        rxPermissions.requestEach(Manifest.permission.CAMERA)//相机权限
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            // 用户已经同意该权限
+                            scan();
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限,未勾选不在询问
+                            Toast.makeText(MainActivity.this,"该功能需要开启位置权限，请您开启！",Toast.LENGTH_SHORT).show();
+                        } else {
+                            // 用户拒绝了该权限,且勾选不在询问
+                            showOpenPermissionDialog();//显示请求权限对话框
+                        }
+                    }
+
+                    private void showOpenPermissionDialog() {
+                        requestCameraPermDialog=new SweetAlertDialog(MainActivity.this);
+                        requestCameraPermDialog .setTitleText("权限申请")
+                                .setContentText("该功能需要在“设置-应用-掌上治水-权限”中开启相机权限，请您开启！")
+                                .setConfirmText("去打开")
+                                .setCancelText("取消")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        PermissionUtil permPageUtil = new PermissionUtil(MainActivity.this);
+                                        permPageUtil.jumpPermissionPage();
+                                    }
+                                })
+                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+                                    }
+                                }).show();
+                    }
+
+                    /*打开二维码扫描*/
+                    private void scan() {
+                        IntentIntegrator integrator=new IntentIntegrator(MainActivity.this);
+                        integrator.setCaptureActivity(ScanActivity.class);//自定义CaptureActivity
+                        // 设置要扫描的条码类型，ONE_D_CODE_TYPES：一维码，QR_CODE_TYPES-二维码
+                        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+                        integrator.setPrompt("");//设置提示语
+                        integrator.setTimeout(60000);//设置超时,超过这个时间之后，扫描的 Activity 将会被 finish 。
+                        integrator.setBeepEnabled(true);// 是否开启声音,扫完码之后会"哔"的一声
+                        integrator.initiateScan();
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case RequestCode.REQUEST_PERMISSION_CODE:
+                requestCameraPermDialog.dismiss();
+        }
     }
 
     /**设置ViewPager适配Fragment*/
@@ -185,8 +318,106 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**核查网络连接状态，若无网络，则显示提示栏*/
+    protected void checkNetConnectState() {
+        //注册receiver
+        IntentFilter intentFilter = new IntentFilter();
+        //广播接收器想要监听什么广播，就在这里添加相应的action
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        networkChangeReceiver=new NetworkChangeReceiver();
+        //调用resigerReceiver()方法进行注册
+        registerReceiver(networkChangeReceiver, intentFilter);
+
+        //点击跳转到网络设置界面
+        netState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.setAction(Settings.ACTION_WIRELESS_SETTINGS);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**保持登录状态*/
+    private void keepLoginState() {
+        //从SharedPreferences中取出jwt
+        SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        final String accessJwt=sp.getString("access_jwt",null);
+        //发送accessToken到服务器验证
+        if(accessJwt!=null){
+            Call<JwtReception> keepLoginCall= Retrofit2.getService().postAccessJwt(accessJwt);
+            keepLoginCall.enqueue(new Callback<JwtReception>() {
+                @SuppressLint("ApplySharedPref")
+                @Override
+                public void onResponse(@NonNull Call<JwtReception> call, @NonNull Response<JwtReception> response) {
+                    int code= Objects.requireNonNull(response.body()).getCode();
+
+                    //新建SharedPreferences对象
+                    SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor=sp.edit();
+
+                    switch (code) {
+                        case ResponseCode.OK:
+                            System.out.println("保持登录成功");
+                            //添加数据
+                            editor.putString("access_jwt", accessJwt);
+                            editor.apply();
+                            break;
+
+                        case ResponseCode.TOKEN_IS_INVALID: //令牌无效
+                            System.out.println("令牌无效");
+                            editor.putInt("user_id",0);
+                            editor.apply();
+                            break;
+
+                        case ResponseCode.ACCESS_TOKEN_IS_EXPIRED: //令牌过期
+                            System.out.println("令牌过期");
+                            final String refreshJwt=sp.getString("refresh_jwt",null);
+
+                            if(refreshJwt!=null){
+                                Call<JwtReception> jwtCall=Retrofit2.getService().postRefreshJwt(refreshJwt);
+                                jwtCall.enqueue(new Callback<JwtReception>() {
+                                    @Override
+                                    public void onResponse(@NonNull Call<JwtReception> call, Response<JwtReception> response) {
+                                        int code= Objects.requireNonNull(response.body()).getCode();
+                                        String newAccessJwt= Objects.requireNonNull(response.body()).getData().getAccessJwt();
+                                        String newRefreshJwt= Objects.requireNonNull(response.body()).getData().getRefreshJwt();
+
+                                        if(code==6666) {//登录成功
+                                            //注册成功后将服务器返回的jwt存入SharedPreferences
+                                            //新建SharedPreferences对象
+                                            SharedPreferences sp=getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                                            //添加数据
+                                            SharedPreferences.Editor editor=sp.edit();
+                                            editor.putString("access_jwt", newAccessJwt);
+                                            editor.putString("refresh_jwt", newRefreshJwt);
+                                            editor.apply();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NonNull Call<JwtReception> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+                            break;
+                        case ResponseCode.REFRESH_TOKEN_IS_EXPIRED: //重新登录
+                            break;
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<JwtReception> call, @NonNull Throwable t) {
+                    System.out.println(t.getMessage());
+                }
+            });
+        }
+    }
+
     /**设置标题栏控件状态——不同页面显示不同控件；
-      设置导航栏控件状态——底部导航栏4个按钮点击后颜色改变*/
+     设置导航栏控件状态——底部导航栏4个按钮点击后颜色改变*/
     public void setPageOneWidget(){
         //标题栏控件可见与否
         tvTitle.setText(R.string.tv_first_page);
@@ -276,250 +507,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvPageFour.setTextColor(ContextCompat.getColor(this,R.color.colorGreen));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            //“扫描”按钮监听事件
-            case R.id.rl_scan:
-                scan();//跳转到二维码扫描
-                break;
-
-            //“相机”按钮监听事件
-            case R.id.rl_camera:
-                CommonUtil.skipActivityByFade(this,AddMomentActivity.class);
-                break;
-
-            //“首页”按钮监听事件
-            case R.id.rl_page_one:
-                viewPager.setCurrentItem(0);//跳转到第1页
-                setPageOneWidget();//改变按钮状态
-                break;
-
-            //“动态”按钮监听事件
-            case R.id.rl_page_two:
-                viewPager.setCurrentItem(1);//跳转到第2页
-                setPageTwoWidget();//改变按钮状态
-                break;
-
-            //“消息”按钮监听事件
-            case R.id.rl_page_three:
-                viewPager.setCurrentItem(2);//跳转到第3页
-                setPageThreeWidget();//改变按钮状态
-                break;
-
-            //“我的"按钮监听事件
-            case R.id.rl_page_four:
-                viewPager.setCurrentItem(3);//跳转到第4页
-                setPageFourWidget();//改变按钮状态
-                break;
-        }
-    }
-
-    /**打开二维码扫描*/
-    private void scan() {
-        IntentIntegrator integrator=new IntentIntegrator(MainActivity.this);
-        integrator.setCaptureActivity(ScanActivity.class);//自定义CaptureActivity
-        // 设置要扫描的条码类型，ONE_D_CODE_TYPES：一维码，QR_CODE_TYPES-二维码
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-        integrator.setPrompt("");//设置提示语
-        integrator.setTimeout(60000);//设置超时,超过这个时间之后，扫描的 Activity 将会被 finish 。
-        integrator.setBeepEnabled(true);// 是否开启声音,扫完码之后会"哔"的一声
-        integrator.initiateScan();
-    }
-
-    /**核查网络连接状态，若无网络，则显示提示栏*/
-    protected void checkNetConnectState() {
-        //注册receiver
-        IntentFilter intentFilter = new IntentFilter();
-        //广播接收器想要监听什么广播，就在这里添加相应的action
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        networkChangeReceiver=new NetworkChangeReceiver();
-        //调用resigerReceiver()方法进行注册
-        registerReceiver(networkChangeReceiver, intentFilter);
-
-        //点击跳转到网络设置界面
-        netState.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.setAction(Settings.ACTION_WIRELESS_SETTINGS);
-                startActivity(intent);
-            }
-        });
-    }
-
-//    /**权限请求响应*/
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        switch (requestCode){
-//            case RequestCode.MOBILE_MONITOR_REQUEST_PERMISSION_LOCATION_CODE:
-//                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//                    //打开GPS
-//                    if(!CommonUtil.GpsIsOpened(MainActivity.this)){
-//                        DialogUtil.showOpenGpsDialog(this, RequestCode.MOBILE_MONITOR_GPS_REQUEST_CODE);
-//                    }else{
-//                        skipToDestActivityByFade(MobileMonitorActivity.class);
-//                    }
-//                }else{
-//                    Toast.makeText(this,
-//                            "获取定位权限失败，请手动获取！",Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//            case RequestCode.RIVER_PATROL_REQUEST_PERMISSION_LOCATION_CODE:
-//                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//                    //打开GPS
-//                    if(!CommonUtil.GpsIsOpened(MainActivity.this)){
-//                        DialogUtil.showOpenGpsDialog(MainActivity.this,
-//                                RequestCode.RIVER_PATROL_GPS_REQUEST_CODE);
-//                    }else{
-//                        skipToDestActivityByFade(PatrolActivity.class);
-//                    }
-//                }else{
-//                    Toast.makeText(this,
-//                            "获取定位权限失败，请手动获取！",Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//            case RequestCode.DEVICE_MANAGER_REQUEST_PERMISSION_LOCATION_CODE:
-//                if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//                    //打开GPS
-//                    if(!CommonUtil.GpsIsOpened(MainActivity.this)){
-//                        DialogUtil.showOpenGpsDialog(MainActivity.this,
-//                                RequestCode.DEVICE_MANAGER_GPS_REQUEST_CODE);
-//                    }else{
-//                        skipToDestActivityByFade(PatrolActivity.class);
-//                    }
-//                }else{
-//                    Toast.makeText(this,
-//                            "获取定位权限失败，请手动获取！",Toast.LENGTH_SHORT).show();
-//                }
-//                break;
-//        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode== RequestCode.RIVER_PATROL_GPS_REQUEST_CODE){
-//            if(CommonUtil.GpsIsOpened(MainActivity.this)){
-//                skipToDestActivityByFade(PatrolActivity.class);
-//            }
-//        }
-//
-//        if(requestCode==RequestCode.DEVICE_MANAGER_GPS_REQUEST_CODE){
-//            if(CommonUtil.GpsIsOpened(MainActivity.this)){
-//                skipToDestActivityByFade(DeviceManagerActivity.class);
-//            }
-//        }
-//
-//        if(requestCode==RequestCode.MOBILE_MONITOR_GPS_REQUEST_CODE){
-//            if(CommonUtil.GpsIsOpened(MainActivity.this)){
-//                skipToDestActivityByFade(MobileMonitorActivity.class);
-//            }
-//        }
-//    }
-
-    /**保持登录状态*/
-    private void keepLoginState() {
-        //从SharedPreferences中取出jwt
-        SharedPreferences sp=getSharedPreferences("jwt", Context.MODE_PRIVATE);
-        String accessJwt=sp.getString("postAccessJwt",null);
-        //发送accessToken到服务器验证
-        if(accessJwt!=null){
-            Call<JwtReception> keepLoginCall= Retrofit2.getService().postAccessJwt(accessJwt);
-            keepLoginCall.enqueue(new Callback<JwtReception>() {
-                @SuppressLint("ApplySharedPref")
-                @Override
-                public void onResponse(@NonNull Call<JwtReception> call, @NonNull Response<JwtReception> response) {
-                    int code= Objects.requireNonNull(response.body()).getCode();
-                    switch (code) {
-                        case ResponseCode.OK:
-                            System.out.println("保持登录成功");
-                            String accessJwt= Objects.requireNonNull(response.body()).getData().getAccessJwt();
-                            //新建SharedPreferences对象
-                            SharedPreferences sp=getSharedPreferences("postAccessJwt",Context.MODE_PRIVATE);
-                            //添加数据
-                            SharedPreferences.Editor editor=sp.edit();
-                            editor.putString("postAccessJwt", accessJwt);
-                            editor.commit();
-                            //登录状态
-                            logOut.setVisibility(View.GONE);
-                            logIn.setVisibility(View.VISIBLE);
-                            break;
-
-                        case ResponseCode.TOKEN_IS_INVALID: //令牌无效
-                            System.out.println("令牌无效");
-                            logOut.setVisibility(View.VISIBLE);
-                            logIn.setVisibility(View.GONE);
-                            break;
-
-                        case ResponseCode.ACCESS_TOKEN_IS_EXPIRED: //令牌过期
-                            System.out.println("令牌过期");
-                            SharedPreferences spf=getSharedPreferences("jwt",Context.MODE_PRIVATE);
-                            String refreshJwt=spf.getString("postRefreshJwt",null);
-
-                            if(refreshJwt!=null){
-                                Call<JwtReception> jwtCall=Retrofit2.getService().postRefreshJwt(refreshJwt);
-                                jwtCall.enqueue(new Callback<JwtReception>() {
-                                    @Override
-                                    public void onResponse(Call<JwtReception> call, Response<JwtReception> response) {
-                                        int code= Objects.requireNonNull(response.body()).getCode();
-                                        String accessJwt1= Objects.requireNonNull(response.body()).getData().getAccessJwt();
-                                        String refreshJwt1= Objects.requireNonNull(response.body()).getData().getRefreshJwt();
-
-                                        if(code==6666) {//登录成功
-                                            //注册成功后将服务器返回的jwt存入SharedPreferences
-                                            //新建SharedPreferences对象
-                                            SharedPreferences sp = getSharedPreferences("jwt", Context.MODE_PRIVATE);
-                                            //添加数据
-                                            SharedPreferences.Editor editor = sp.edit();
-                                            editor.putString("postAccessJwt", accessJwt1);
-                                            editor.putString("postRefreshJwt", refreshJwt1);
-                                            editor.commit();
-
-                                            //登录状态
-                                            logOut.setVisibility(View.GONE);
-                                            logIn.setVisibility(View.VISIBLE);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<JwtReception> call, Throwable t) {
-
-                                    }
-                                });
-                            }
-                            //登录状态
-                            logOut.setVisibility(View.INVISIBLE);
-                            logIn.setVisibility(View.VISIBLE);
-                            break;
-                        case ResponseCode.REFRESH_TOKEN_IS_EXPIRED: //重新登录
-                            break;
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<JwtReception> call, @NonNull Throwable t) {
-                    System.out.println(t.getMessage());
-                }
-            });
-        }
-    }
-
-    /**接收来自登录页面跳转值并跳到第4页*/
-    private void getIntentFromLoginActivity() {
-        Intent it=getIntent();//Activity间传值
-        int page=it.getIntExtra("page",0);
-        int loginState=it.getIntExtra("login_state",0);
-
-        viewPager.setCurrentItem(page);
-        if(page==4 && loginState==1){
-            logIn.setVisibility(View.VISIBLE);
-            logOut.setVisibility(View.GONE);
-        }
-    }
-
     /**监听网络状态改变类-----通过广播receiver实时监听网络连接状态，若无网
      络连接则显示网络异常提示栏，点击后跳转到网络设置页面，有网则不显示*/
     class NetworkChangeReceiver extends BroadcastReceiver{
@@ -541,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
-        public MyFragmentPagerAdapter(FragmentManager fm) {
+        MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -556,25 +543,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    /**双击返回键退出:单击返回键MakeToast提示“再按一次退出程序”，
-       若2秒内按下第二次则退出，否则不退出*/
+    /**实现只在冷启动时显示启动页，即点击返回键与点击HOME键退出效果一致*/
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            if(!isExit){
-                isExit=true;//准备退出
-                Toast.makeText(this,"再按一次退出程序", Toast.LENGTH_SHORT).show();
-                Timer timer=new Timer();
-                timer.schedule(new TimerTask() {
-                    public void run() {
-                        isExit=false;//取消退出
-                    }
-                },2000);//2s内未按下返回键，则启动定时器消掉刚才的操作
-            }else{
-                finish();
-                System.exit(0);
-            }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            return true;
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

@@ -24,7 +24,7 @@ import javax.crypto.NoSuchPaddingException;
  **/
 
 public class EncryptUtil {
-    public final static String getMD5Str(String s) {
+    private static String EncryptByMD5(String s) {
         char hexDigits[] = { '0', '1', '2', '3', '4','5', '6', '7',
                            '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         try {
@@ -57,7 +57,7 @@ public class EncryptUtil {
      * @param srcData 待加密的数据
      * @return 以Base64编码的加密后的数据String
      */
-    public static String encrypt(String srcData){
+    private static String encryptByRSA(String srcData){
         String encryptedStr=null;
 
         //将字符串形式的公钥转换为公钥对象
@@ -86,5 +86,17 @@ public class EncryptUtil {
             e.printStackTrace();
         }
         return encryptedStr;
+    }
+
+    /**
+     * 加密
+     * @param password 待加密的数据
+     * @return 以Base64编码的加密后的数据String
+     */
+    public static String encrypt(String password){
+        //使用MD5加密密码password
+        String md5Pasw = EncryptByMD5(password);
+        //使用RSA加密md5Pasw(以Base64编码的RSA加密的密码)
+        return encryptByRSA(md5Pasw);
     }
 }

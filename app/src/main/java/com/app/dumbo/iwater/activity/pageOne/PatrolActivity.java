@@ -1,10 +1,6 @@
 package com.app.dumbo.iwater.activity.pageOne;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -13,12 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.MainActivity;
-import com.app.dumbo.iwater.activity.pageFour.SetActivity;
 import com.app.dumbo.iwater.activity.superClass.BaseMapActivity;
 import com.app.dumbo.iwater.constant.BaiduTraceConstant;
+import com.app.dumbo.iwater.constant.RequestCode;
 import com.app.dumbo.iwater.util.CommonUtil;
-import com.app.dumbo.iwater.util.DialogUtil;
 import com.app.dumbo.iwater.util.MapUtil;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
@@ -64,23 +58,6 @@ public class PatrolActivity extends BaseMapActivity {
         setContentView(R.layout.activity_patrol);
         SDKInitializer.initialize(getApplicationContext());
         super.onCreate(savedInstanceState);
-
-        //控件初始化
-        initView();
-
-        //控件监听
-        listenWidget();
-    }
-
-    /**控件初始化*/
-    public void initView(){
-        rlTraceStart=findViewById(R.id.rl_trace_start);
-        rlTraceStop=findViewById(R.id.rl_trace_stop);
-        tvState=findViewById(R.id.tv_state);
-
-        //地图初始化
-        MapView myMapView = findViewById(R.id.myMapView);
-        myBaiduMap= myMapView.getMap();
 
         //****************初始化轨迹服务********************
         long serviceId= BaiduTraceConstant.BAIDU_TRACE_SERVICE_ID;  //轨迹服务id
@@ -219,17 +196,35 @@ public class PatrolActivity extends BaseMapActivity {
             @Override
             public void onPushCallback(byte messageNo, PushMessage message) {}
         };
-    }
 
-    /**控件监听*/
-    private void listenWidget() {
-        //*****************开启轨迹追踪*******************
         // 开启服务
         myTraceClient.startTrace(myTrace, myTraceListener);
+    }
 
-        rlTraceStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void initView() {
+        super.initView();
+        //地图初始化
+        MapView myMapView = findViewById(R.id.myMapView);
+        myBaiduMap= myMapView.getMap();
+
+        rlTraceStart=findViewById(R.id.rl_trace_start);
+        rlTraceStop=findViewById(R.id.rl_trace_stop);
+        tvState=findViewById(R.id.tv_state);
+    }
+
+    @Override
+    public void setListener() {
+        super.setListener();
+        rlTraceStart.setOnClickListener(this);
+        rlTraceStop.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.rl_trace_start:
                 if(CommonUtil.GpsIsOpened(PatrolActivity.this)){
                     rlTraceStart.setVisibility(View.GONE);
                     rlTraceStop.setVisibility(View.VISIBLE);
@@ -238,69 +233,19 @@ public class PatrolActivity extends BaseMapActivity {
                     myTraceClient.startGather(myTraceListener);
                 }else{
                     //显示打开GPS对话框
-                    DialogUtil.showOpenGpsDialog(PatrolActivity.this,1);
+                    showOpenGpsDialog();
                 }
-            }
-        });
+                break;
 
-        rlTraceStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            case R.id.rl_trace_stop:
                 //显示退出巡查对话框
                 showExitTracingDialog();
-
-                // 请求标识
-                int tag = 1;
-                // 轨迹服务ID
-                long serviceId = 200727;
-                // 设备标识
-                String entityName = "myTrace";
-                // 创建历史轨迹请求实例
-                final HistoryTrackRequest historyTrackRequest
-                        = new HistoryTrackRequest(tag, serviceId, entityName);
-
-                //设置轨迹查询起止时间
-                // 开始时间(单位：秒)
-                long startTime = System.currentTimeMillis() / 1000 - 60;
-                // 结束时间(单位：秒)
-                long endTime = System.currentTimeMillis() / 1000;
-                // 设置开始时间
-                historyTrackRequest.setStartTime(startTime);
-                // 设置结束时间
-                historyTrackRequest.setEndTime(endTime);
-                // 初始化轨迹服务客户端
-                myTraceClient = new LBSTraceClient(getApplicationContext());
-
-                // 初始化轨迹监听器
-                OnTrackListener myTrackListener = new OnTrackListener() {
-                    // 历史轨迹回调
-                    @Override
-                    public void onHistoryTrackCallback(HistoryTrackResponse response) {
-                        int total = response.getTotal();
-                        if (StatusCodes.SUCCESS != response.getStatus()) {
-                            Toast.makeText(PatrolActivity.this,response.getMessage(),Toast.LENGTH_SHORT).show();
-                        } else if (total == 0) {
-                            Toast.makeText(PatrolActivity.this,"未查询到轨迹",Toast.LENGTH_SHORT).show();
-                        } else {
-                            List<TrackPoint> points = response.getTrackPoints();
-                            if (points != null) {
-                                for (TrackPoint trackPoint : points) {
-                                    if (!MapUtil.isZeroPoint(trackPoint.getLocation().getLatitude(),
-                                            trackPoint.getLocation().getLongitude())) {
-                                        trackPoints.add(MapUtil.convertTrace2Map(trackPoint.getLocation()));
-                                    }
-                                }
-                            }
-                            //绘制轨迹
-                            MapUtil.drawHistoryTrack(PatrolActivity.this,myBaiduMap,trackPoints, SortType.asc);
-                        }
-                    }
-                };
-                // 查询历史轨迹
-                myTraceClient.queryHistoryTrack(historyTrackRequest, myTrackListener);
-            }
-        });
+                //查询历史轨迹
+                queryHistoryTrack();
+                break;
+        }
     }
+
 
     /**确认退出巡查对话框*/
     private void showExitTracingDialog() {
@@ -326,5 +271,82 @@ public class PatrolActivity extends BaseMapActivity {
                     }
                 })
                 .show();
+    }
+
+    /*打开GPS对话框*/
+    private void showOpenGpsDialog() {
+        new SweetAlertDialog(PatrolActivity.this)
+                .setContentText("该功能需要使用GPS，请打开GPS！")
+                .setConfirmText("去打开")
+                .setCancelText("取消")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        //跳转到GPS设置界面
+                        Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, RequestCode.RIVER_PATROL_GPS_REQUEST_CODE);
+                        sweetAlertDialog.dismiss();
+                    }
+                })
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    /**查询历史轨迹*/
+    private void queryHistoryTrack() {
+        // 请求标识
+        int tag = 1;
+        // 轨迹服务ID
+        long serviceId = 200727;
+        // 设备标识
+        String entityName = "myTrace";
+        // 创建历史轨迹请求实例
+        final HistoryTrackRequest historyTrackRequest
+                = new HistoryTrackRequest(tag, serviceId, entityName);
+
+        //设置轨迹查询起止时间
+        // 开始时间(单位：秒)
+        long startTime = System.currentTimeMillis() / 1000 - 60;
+        // 结束时间(单位：秒)
+        long endTime = System.currentTimeMillis() / 1000;
+        // 设置开始时间
+        historyTrackRequest.setStartTime(startTime);
+        // 设置结束时间
+        historyTrackRequest.setEndTime(endTime);
+        // 初始化轨迹服务客户端
+        myTraceClient = new LBSTraceClient(getApplicationContext());
+
+        // 初始化轨迹监听器
+        OnTrackListener myTrackListener = new OnTrackListener() {
+            // 历史轨迹回调
+            @Override
+            public void onHistoryTrackCallback(HistoryTrackResponse response) {
+                int total = response.getTotal();
+                if (StatusCodes.SUCCESS != response.getStatus()) {
+                    Toast.makeText(PatrolActivity.this,response.getMessage(),Toast.LENGTH_SHORT).show();
+                } else if (total == 0) {
+                    Toast.makeText(PatrolActivity.this,"未查询到轨迹",Toast.LENGTH_SHORT).show();
+                } else {
+                    List<TrackPoint> points = response.getTrackPoints();
+                    if (points != null) {
+                        for (TrackPoint trackPoint : points) {
+                            if (!MapUtil.isZeroPoint(trackPoint.getLocation().getLatitude(),
+                                    trackPoint.getLocation().getLongitude())) {
+                                trackPoints.add(MapUtil.convertTrace2Map(trackPoint.getLocation()));
+                            }
+                        }
+                    }
+                    //绘制轨迹
+                    MapUtil.drawHistoryTrack(PatrolActivity.this,myBaiduMap,trackPoints, SortType.asc);
+                }
+            }
+        };
+        // 查询历史轨迹
+        myTraceClient.queryHistoryTrack(historyTrackRequest, myTrackListener);
     }
 }

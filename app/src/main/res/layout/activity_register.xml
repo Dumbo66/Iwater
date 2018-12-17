@@ -5,18 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@android:color/background_light">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@color/colorTitleBar"/>
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@color/colorTitleBar">
 
         <!--返回按钮-->
@@ -26,7 +19,6 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:background="@drawable/clicked_color_back">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -34,7 +26,6 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/image" />
-
         </RelativeLayout>
 
         <!--分隔线-->
@@ -60,23 +51,23 @@
     </RelativeLayout>
 
     <!--内容栏-->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="902"
-        android:orientation="vertical"
-        android:padding="12dp">
-
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@android:color/background_light">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
 
             <!--手机号栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="55dp">
 
                 <EditText
                     android:id="@+id/et_tel"
@@ -100,27 +91,26 @@
                     android:textSize="18sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_clear_tel"
+                    android:id="@+id/rl_clear_phone"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:paddingEnd="4dp"
                     android:paddingTop="8dp"
                     android:visibility="invisible"
                     android:layout_alignParentEnd="true">
-
                     <ImageView
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/clear" />
                 </RelativeLayout>
+
             </RelativeLayout>
 
             <!--密码栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="55dp">
 
                 <EditText
                     android:id="@+id/et_pasw"
@@ -201,8 +191,7 @@
             <!--确认密码栏-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="55dp">
 
                 <EditText
                     android:id="@+id/et_rpasw"
@@ -228,7 +217,7 @@
                     android:textSize="18sp" />
 
                 <RelativeLayout
-                    android:id="@+id/clear_rpasw"
+                    android:id="@+id/rl_clear_rpasw"
                     android:layout_width="32dp"
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/closed_eye2"
@@ -276,81 +265,63 @@
                         android:contentDescription="@string/image" />
 
                 </RelativeLayout>
+
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"/>
-
+            <!--下一步按钮-->
             <Button
-                android:id="@+id/next"
+                android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
+                android:layout_marginTop="15dp"
                 android:text="@string/tv_next"
                 android:textSize="18sp"
                 android:textColor="#ffffff"
                 android:background="@drawable/rect_green_little_rad" />
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:orientation="vertical">
+    <!--注册代表你同意用户协议和隐私条款-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@android:color/background_light">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="12">
+        <TextView
+            android:id="@+id/text_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注册代表你同意"
+            android:textSize="12sp"/>
 
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_user_protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户协议"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/text_agree"
+            android:textColor="@color/colorGreen"/>
 
-            <!--登录代表你同意酷狗服务和隐私条款-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+        <TextView
+            android:id="@+id/text_and"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/tv_user_protocol" />
 
-                <TextView
-                    android:id="@+id/text_agree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="注册代表你同意"
-                    android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tv_privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="隐私条款"
+            android:textSize="12sp"
+            android:layout_toEndOf="@+id/text_and"
+            android:textColor="@color/colorGreen"/>
 
-                <TextView
-                    android:id="@+id/tv_user_protocol"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="用户协议"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/text_agree"
-                    android:textColor="@color/colorGreen"/>
-
-                <TextView
-                    android:id="@+id/text_and"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="和"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/tv_user_protocol" />
-
-                <TextView
-                    android:id="@+id/tv_privacy_policy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="隐私条款"
-                    android:textSize="12sp"
-                    android:layout_toEndOf="@+id/text_and"
-                    android:textColor="@color/colorGreen"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

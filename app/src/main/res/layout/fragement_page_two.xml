@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:srlHeaderHeight="52dp"
+    app:srlFooterHeight="40dp"
+    app:srlEnableLoadMoreWhenContentNotFull="false">
 
         <!--头（下拉刷新）-->
     <com.scwang.smartrefresh.layout.header.ClassicsHeader

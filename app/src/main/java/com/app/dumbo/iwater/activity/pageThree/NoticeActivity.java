@@ -2,34 +2,38 @@ package com.app.dumbo.iwater.activity.pageThree;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.superClass.WithBackActivity;
+import com.app.dumbo.iwater.activity.superClass.BaseActivity;
 
 /**
  * Created by dumbo on 2017/10/27.
  */
 
-public class NoticeActivity extends WithBackActivity {
+public class NoticeActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         setContentView(R.layout.activity_notice);
         super.onCreate(savedInstanceState);
 
-        //控件初始化
-        initView();
-
-        //控件监听
-        listenWidget();
     }
 
-    /**控件初始化*/
-    public void initView(){
+    @Override
+    public void initView() {
+        super.initView();
 
     }
 
-    /**控件监听*/
-    private void listenWidget() {
+    @Override
+    public void setListener() {
+        super.setListener();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
 
     }
 }

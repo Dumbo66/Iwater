@@ -6,5 +6,5 @@
         android:drawable="@color/colorPressedNetState" />
 
     <!--初始颜色-->
-    <item android:drawable="@color/colorPrimayNetState"/>
+    <item android:drawable="@color/colorPrimaryNetState"/>
 </selector>

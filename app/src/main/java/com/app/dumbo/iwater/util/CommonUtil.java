@@ -3,8 +3,10 @@ package com.app.dumbo.iwater.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.location.LocationManager;
+import android.support.annotation.ColorInt;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.view.View;
 import com.app.dumbo.iwater.activity.MainActivity;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.jaeger.library.StatusBarUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,5 +116,13 @@ public class CommonUtil {
     public static void skipActivityBySlide(Activity activity,Class descClass){
         Intent intent=new Intent(activity,descClass);
         activity.startActivity(intent);
+    }
+
+    /**
+     * sp转换成px
+     */
+    public static int sp2px(Context context,float spValue){
+        float fontScale=context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue*fontScale+0.5f);
     }
 }

@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image_monitor"
                         android:layout_centerInParent="true"
-                        android:text="@string/tv_map_monitor"
+                        android:text="水质监测"
                         android:textSize="13sp" />
 
                 </RelativeLayout>
@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/image_task"
                         android:layout_centerInParent="true"
-                        android:text="@string/tv_task"
+                        android:text="空气监测"
                         android:textSize="13sp" />
 
                 </RelativeLayout>

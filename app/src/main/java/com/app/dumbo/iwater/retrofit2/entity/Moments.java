@@ -3,7 +3,13 @@ package com.app.dumbo.iwater.retrofit2.entity;
 import java.util.Date;
 
 public class Moments {
+    private Integer momentId;
+
     private Integer userId;
+
+    private String nickName;
+
+    private String avatarUrl;
 
     private Date recordTime;
 
@@ -17,12 +23,36 @@ public class Moments {
 
     private String address;
 
+    public Integer getMomentId() {
+        return momentId;
+    }
+
+    public void setMomentId(Integer momentId) {
+        this.momentId = momentId;
+    }
+
     public Integer getUserId() {
         return userId;
     }
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
     }
 
     public Date getRecordTime() {

@@ -30,6 +30,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
+import com.app.dumbo.iwater.util.CommonUtil;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.client.android.R;
 import com.journeyapps.barcodescanner.CameraPreview;
@@ -227,7 +228,8 @@ public class MyViewFinderView extends ViewfinderView {
 
             //绘制提示语
             paint.setColor(0xffffffff);
-            paint.setTextSize(30);
+
+            paint.setTextSize(CommonUtil.sp2px(getContext(),14.0f));
             final String text="请将二维码放入框内扫描！";
             final float textLength=paint.measureText(text);
             final float x=(width-textLength)/2;

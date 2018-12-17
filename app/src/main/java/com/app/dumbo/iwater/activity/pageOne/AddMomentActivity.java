@@ -2,9 +2,10 @@ package com.app.dumbo.iwater.activity.pageOne;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,18 +15,23 @@ import android.widget.Toast;
 
 import com.app.dumbo.iwater.R;
 import com.app.dumbo.iwater.activity.MainActivity;
+import com.app.dumbo.iwater.activity.pageFour.loginAndRegister.LoginRegisterActivity;
 import com.app.dumbo.iwater.activity.superClass.AnimFadeActivity;
 import com.app.dumbo.iwater.constant.Common;
+import com.app.dumbo.iwater.constant.RequestCode;
 import com.app.dumbo.iwater.constant.ResponseCode;
 import com.app.dumbo.iwater.retrofit2.Retrofit2;
-import com.app.dumbo.iwater.retrofit2.entity.Reception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.Reception;
+import com.app.dumbo.iwater.util.CommonUtil;
 import com.app.dumbo.iwater.util.MapUtil;
+import com.app.dumbo.iwater.util.PermissionUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -34,20 +40,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import pub.devrel.easypermissions.EasyPermissions;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,39 +68,33 @@ import top.zibin.luban.Luban;
 
 @SuppressLint("Registered")
 public class AddMomentActivity extends AnimFadeActivity
-        implements EasyPermissions.PermissionCallbacks,BGASortableNinePhotoLayout.Delegate{
+        implements BGASortableNinePhotoLayout.Delegate{
     private static final int PRC_PHOTO_PICKER = 1;
 
     private static final int RC_CHOOSE_PHOTO = 2;
     private static final int RC_PHOTO_PREVIEW = 3;
-
-    private static final String EXTRA_MOMENT = "EXTRA_MOMENT";
 
     private BGASortableNinePhotoLayout snpl;//拖拽排序九宫格控件
     private RelativeLayout submit;//“提交”按钮
     private TextView tvAddress;//我的地址
     private EditText etDesc;//描述
 
+    private SweetAlertDialog requestStoragePermDialog;
+
     public LocationClient myLocClient =null;
     private MyLocationListener myListener =new MyLocationListener() ;
-    private MyLocationData myLocData;//位置信息对象
     private double lat;//纬度
     private double lng;//经度
     private String address;//位置
 
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_problem_record);
+        setContentView(R.layout.activity_add_moment);
         super.onCreate(savedInstanceState);
-
-        //控件初始化
-        initView();
-
-        //控件监听
-        listenWidget();
     }
 
-    /**控件初始化*/
+    @Override
     public void initView(){
+        super.initView();
         snpl=findViewById(R.id.snpl);
         submit=findViewById(R.id.rl_submit);
         tvAddress=findViewById(R.id.tv_address);
@@ -118,9 +120,14 @@ public class AddMomentActivity extends AnimFadeActivity
         myLocClient.start();
     }
 
-    /**控件监听*/
-    private void listenWidget() {
+    @Override
+    public void setListener() {
+        super.setListener();
+    }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
     }
 
     /**定位SDK监听函数*/
@@ -141,74 +148,86 @@ public class AddMomentActivity extends AnimFadeActivity
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(etDesc.getText().toString().equals("")){
-                        Toast.makeText(AddMomentActivity.this,
-                             "问题描述不能为空！", Toast.LENGTH_SHORT).show();
-                    }else if(snpl.getData().isEmpty()){
-                        Toast.makeText(AddMomentActivity.this,
-                                "图片不能为空！", Toast.LENGTH_SHORT).show();
-                    }else{
-                        //获取时间
-                        Date date=new Date();
-                        @SuppressLint("SimpleDateFormat")
-                        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    final SharedPreferences sp= Objects.requireNonNull(AddMomentActivity.this)
+                            .getSharedPreferences("user_info", Context.MODE_PRIVATE);
+                    String avatarUrl=sp.getString("avatar_url",null);
+                    String nickName=sp.getString("nick_name",null);
+                    int userId=sp.getInt("user_id",0);
 
-                        //上传的文本map
-                        MediaType textType=MediaType.parse("text/plain");
-                        final Map<String,RequestBody> map=new HashMap<>();
-                        map.put("desc",RequestBody.create(textType,etDesc.getText().toString()));
-                        map.put("addr",RequestBody.create(textType,address));
-                        map.put("time",RequestBody.create(textType,sdf.format(date)));
-                        map.put("user_id",RequestBody.create(textType,1234+""));
-                        map.put("lat",RequestBody.create(textType,""+lat));
-                        map.put("lng",RequestBody.create(textType,""+lng));
+                    if (userId!=0){
+                        if(etDesc.getText().toString().equals("")){
+                            Toast.makeText(AddMomentActivity.this,
+                                    "问题描述不能为空！", Toast.LENGTH_SHORT).show();
+                        }else if(snpl.getData().isEmpty()){
+                            Toast.makeText(AddMomentActivity.this,
+                                    "图片不能为空！", Toast.LENGTH_SHORT).show();
+                        }else{
+                            //获取时间
+                            Date date=new Date();
+                            @SuppressLint("SimpleDateFormat")
+                            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-                        //新建图片压缩缓存文件夹
-                        File file=new File(Common.COMPRESSED_PHOTO_DIR);
-                        if (!file.exists()){
-                            file.mkdirs();
+                            //上传的文本map
+                            MediaType textType=MediaType.parse("text/plain");
+                            final Map<String,RequestBody> map=new HashMap<>();
+                            map.put("user_id",RequestBody.create(textType,userId+""));
+                            map.put("avatar_url",RequestBody.create(textType,avatarUrl));
+                            map.put("nick_name",RequestBody.create(textType,nickName));
+                            map.put("record_time",RequestBody.create(textType,sdf.format(date)));
+                            map.put("description",RequestBody.create(textType,etDesc.getText().toString()));
+                            map.put("address",RequestBody.create(textType,address));
+                            map.put("lat",RequestBody.create(textType,""+lat));
+                            map.put("lng",RequestBody.create(textType,""+lng));
+
+                            //新建图片压缩缓存文件夹
+                            File file=new File(Common.COMPRESSED_PHOTO_DIR);
+                            if (!file.exists()){
+                                file.mkdirs();
+                            }
+
+                            //使用LuBan压缩图片
+                            Observable.just(snpl.getData())
+                                    .observeOn(Schedulers.io())
+                                    .map(new Function<List<String>, List<File>>() {
+                                        @Override
+                                        public List<File> apply(List<String> list) throws Exception {
+                                            return Luban.with(getApplicationContext())
+                                                    .load(snpl.getData())
+                                                    .ignoreBy(100)
+                                                    .setTargetDir(Common.COMPRESSED_PHOTO_DIR)
+                                                    .filter(new CompressionPredicate() {
+                                                        @Override
+                                                        public boolean apply(String path) {
+                                                            return !(TextUtils.isEmpty(path) ||
+                                                                    path.toLowerCase().endsWith(".gif"));
+                                                        }
+                                                    }).get();
+                                        }
+                                    }).observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<List<File>>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(List<File> list) {
+                                            uploadMoment(map,list);//上传
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+
+                                        }
+                                    });
                         }
-
-                        //使用LuBan压缩图片
-                        Observable.just(snpl.getData())
-                                  .observeOn(Schedulers.io())
-                                  .map(new Function<List<String>, List<File>>() {
-                                    @Override
-                                    public List<File> apply(List<String> list) throws Exception {
-                                        return Luban.with(getApplicationContext())
-                                               .load(snpl.getData())
-                                               .ignoreBy(100)
-                                               .setTargetDir(Common.COMPRESSED_PHOTO_DIR)
-                                               .filter(new CompressionPredicate() {
-                                                    @Override
-                                                    public boolean apply(String path) {
-                                                        return !(TextUtils.isEmpty(path) ||
-                                                                path.toLowerCase().endsWith(".gif"));
-                                                    }
-                                               }).get();
-                                    }
-                                  }).observeOn(AndroidSchedulers.mainThread())
-                                  .subscribe(new Observer<List<File>>() {
-                                      @Override
-                                      public void onSubscribe(Disposable d) {
-
-                                      }
-
-                                      @Override
-                                      public void onNext(List<File> list) {
-                                          uploadMoment(map,list);//上传
-                                      }
-
-                                      @Override
-                                      public void onError(Throwable e) {
-
-                                      }
-
-                                      @Override
-                                      public void onComplete() {
-
-                                      }
-                                  });
+                    }else{
+                        showGoLoginDialog();//显示请先登录对话框
                     }
                 }
             });
@@ -218,7 +237,8 @@ public class AddMomentActivity extends AnimFadeActivity
     @Override
     public void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout,
                                         View view, int position, ArrayList<String> models) {
-        addPhoto();
+        //请求权限后跳转到照片选择
+        requestPermissionToActivity();
     }
 
     @Override
@@ -244,32 +264,25 @@ public class AddMomentActivity extends AnimFadeActivity
     @Override
     public void onNinePhotoItemExchanged(BGASortableNinePhotoLayout sortableNinePhotoLayout,
                                          int fromPosition, int toPosition, ArrayList<String> models) {
-        Toast.makeText(this, "排序发生变化", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "排序改变！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
+    public void onPointerCaptureChanged(boolean hasCapture) {}
 
     /**添加照片*/
     private void addPhoto() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-        if (EasyPermissions.hasPermissions(this, perms)) {
-            // 拍照后照片的存放目录,如果不传递该参数的话则不开启图库里的拍照功能
-            File takePhotoDir = new File(Common.TAKE_PHOTO_DIR);
+        // 拍照后照片的存放目录,如果不传递该参数的话则不开启图库里的拍照功能
+        File takePhotoDir = new File(Common.TAKE_PHOTO_DIR);
 
-            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
-                    .cameraFileDir(takePhotoDir) // 拍照后照片的存放目录
-                    .maxChooseCount(snpl.getMaxItemCount() - snpl.getItemCount()) // 图片选择张数的最大值
-                    .selectedPhotos(null) // 当前已选中的图片路径集合
-                    .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
-                    .build();
-            startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
-        } else {
-            EasyPermissions.requestPermissions(this,
-                    "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照", PRC_PHOTO_PICKER, perms);
-        }
+        Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(this)
+                .cameraFileDir(takePhotoDir) // 拍照后照片的存放目录
+                .maxChooseCount(snpl.getMaxItemCount() - snpl.getItemCount()) // 图片选择张数的最大值
+                .selectedPhotos(null) // 当前已选中的图片路径集合
+                .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
+                .build();
+        startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO);
     }
 
     /**上传Moment*/
@@ -307,6 +320,70 @@ public class AddMomentActivity extends AnimFadeActivity
         });
     }
 
+    /**存储权限请求*/
+    @SuppressLint("CheckResult")
+    private void requestPermissionToActivity() {
+        //动态权限请求
+        RxPermissions rxPermissions=new RxPermissions(this);
+        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if(permission.granted) {
+                            // 用户已经同意该权限
+                            addPhoto();
+                        }else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限,未勾选不在询问
+                            Toast.makeText(AddMomentActivity.this,"该功能需要开启存储权限，请您开启！",Toast.LENGTH_SHORT).show();
+                        } else{
+                            // 用户拒绝了该权限,且勾选不在询问
+                            showOpenPermissionDialog();
+                        }
+                    }
+
+                    private void showOpenPermissionDialog() {
+                        requestStoragePermDialog=new SweetAlertDialog(AddMomentActivity.this);
+                        requestStoragePermDialog .setTitleText("权限申请")
+                                .setContentText("该功能需要在“设置-应用-掌上治水-权限”中开启存储权限，请您开启！")
+                                .setConfirmText("去打开")
+                                .setCancelText("取消")
+                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        PermissionUtil permPageUtil = new PermissionUtil(AddMomentActivity.this);
+                                        permPageUtil.jumpPermissionPage();
+                                    }
+                                })
+                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        sweetAlertDialog.dismiss();
+                                    }
+                                }).show();
+                    }
+                });
+    }
+
+    /**显示请先登录对话框*/
+    private void showGoLoginDialog() {
+        new SweetAlertDialog(AddMomentActivity.this)
+                .setContentText("请先登录，方可使用该功能！")
+                .setConfirmText("去登录")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        CommonUtil.skipActivityByFade(AddMomentActivity.this, LoginRegisterActivity.class);
+                    }
+                })
+                .setCancelText("取消")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismiss();
+                    }
+                }).show();
+    }
+
     /**获取已选择的图片集合*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -315,18 +392,8 @@ public class AddMomentActivity extends AnimFadeActivity
             snpl.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
         } else if (requestCode == RC_PHOTO_PREVIEW) {
             snpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
-        }
-    }
-
-    @Override
-    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-
-    }
-
-    @Override
-    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        if (requestCode == PRC_PHOTO_PICKER) {
-            Toast.makeText(this, "您拒绝了「添加图片」所需要的相关权限!", Toast.LENGTH_SHORT).show();
+        } else if(requestCode== RequestCode.REQUEST_PERMISSION_CODE){
+            requestStoragePermDialog.dismiss();
         }
     }
 }

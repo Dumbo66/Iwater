@@ -3,19 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light"/>
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@android:color/background_light">
 
         <!--返回按钮-->
@@ -24,14 +18,12 @@
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:background="@drawable/clicked_color_gray">
-
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/clear"
                 android:contentDescription="@string/image" />
-
         </RelativeLayout>
 
         <!--标题-->
@@ -53,7 +45,7 @@
 
             <!--平面地图-->
             <RelativeLayout
-                android:id="@+id/normal_map"
+                android:id="@+id/rl_normal_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -69,7 +61,7 @@
 
             <!--卫星地图-->
             <RelativeLayout
-                android:id="@+id/satellite_map"
+                android:id="@+id/rl_satellite_map"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -84,11 +76,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
-        <!--分隔线-->
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
 
     </RelativeLayout>
 

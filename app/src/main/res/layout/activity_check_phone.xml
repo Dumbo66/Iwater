@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorTitleBar">
+
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/back"
+            android:layout_width="56dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/clicked_color_back">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/close_white"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/image"/>
+        </RelativeLayout>
+
+        <!--分隔线-->
+        <Button
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/back"
+            android:layout_marginStart="2dp"
+            android:background="#a0ffffff"/>
+
+        <!--标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/back"
+            android:text="@string/tv_check_tel"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <!--内容栏-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@color/color_background" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!--验证码栏-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/tv_hint_ver_code"
+                    android:inputType="phone"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    android:paddingStart="105dp"
+                    android:paddingEnd="64dp"
+                    android:theme="@style/MyEditText"
+                    android:layout_alignBaseline="@+id/textView"
+                    android:layout_alignBottom="@+id/textView"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/tv_ver_code"
+                    android:textSize="18sp"
+                    android:id="@+id/textView"
+                    tools:ignore="RelativeOverlap" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_get_verCode"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true">
+
+                    <Button
+                        android:layout_width="1dp"
+                        android:layout_height="18dp"
+                        android:layout_centerVertical="true"
+                        android:background="#60000000" />
+
+                    <TextView
+                        android:id="@+id/tv_get_verCode_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tv_get_ver_code"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <!--下一步按钮-->
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rect_green_big_rad"
+                android:text="@string/tv_next"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

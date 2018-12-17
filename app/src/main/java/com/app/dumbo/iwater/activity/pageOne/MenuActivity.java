@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.pageOne.mapMonitor.MapMonitorActivity;
 import com.app.dumbo.iwater.activity.pageThree.PeopleActivity;
 import com.app.dumbo.iwater.activity.superClass.AnimFadeActivity;
 import com.app.dumbo.iwater.constant.RequestCode;
@@ -41,17 +40,11 @@ public class MenuActivity extends AnimFadeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_menu);
         super.onCreate(savedInstanceState);
-
-        //控件初始化
-        initView();
-
-        //控件监听
-        listenWidget();
-
     }
 
-    /**控件初始化*/
-    public void initView(){
+    @Override
+    public void initView() {
+        super.initView();
         mapMonitor=findViewById(R.id.rl_map_monitor);
         mobileMonitor=findViewById(R.id.rl_mobile_monitor);
         riverPatrol=findViewById(R.id.rl_river_patrol);
@@ -61,17 +54,175 @@ public class MenuActivity extends AnimFadeActivity {
         supervision=findViewById(R.id.rl_river_info);
     }
 
+    @Override
+    public void setListener() {
+        super.setListener();
+        mapMonitor.setOnClickListener(this);
+        mobileMonitor.setOnClickListener(this);
+        riverPatrol.setOnClickListener(this);
+        problemRecord.setOnClickListener(this);
+        undoTask.setOnClickListener(this);
+//        policy.setOnClickListener(this);
+//        supervision.setOnClickListener(this);
+//        more.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        //"地图监测"按钮监听
+        switch (v.getId()){
+            //"地图监测"按钮监听
+            case R.id.rl_map_monitor:
+                CommonUtil.skipActivityByFade(this,WaterMonitorActivity.class);
+                break;
+
+            //“移动监测”按钮监听
+            case R.id.rl_mobile_monitor:
+//                //动态权限请求
+//                RxPermissions rxPermissions=new RxPermissions(this);
+//                rxPermissions.requestEach(Manifest.permission.ACCESS_FINE_LOCATION)//位置权限
+//                        .subscribe(new Consumer<Permission>() {
+//                            @Override
+//                            public void accept(Permission permission) throws Exception {
+//                                if(permission.granted) {// 用户已经同意该权限
+//                                    //判断GPS是否打开
+//                                    if(CommonUtil.GpsIsOpened(this)){
+//                                        CommonUtil.skipActivityByFade(this,MobileMonitorActivity.class);
+//                                    }else{
+//                                        DialogUtil.showOpenGpsDialog(this, RequestCode.MOBILE_MONITOR_GPS_REQUEST_CODE);
+//                                    }
+//                                }else if(permission.shouldShowRequestPermissionRationale) {
+//                                    // 用户拒绝了该权限，未选中『不再询问』，
+//                                    // 下次再次启动时，还会提示请求权限的对话框
+//                                    new SweetAlertDialog(this)
+//                                            .setContentText("移动监测需要位置权限，请开启位置权限，以正常使用相关功能！")
+//                                            .setConfirmText("去开启")
+//                                            .setCancelText("取消")
+//                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                                @Override
+//                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                                    //跳转到应用详细界面
+//                                                    Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                    this.startActivity(intent);
+//                                                    sweetAlertDialog.dismiss();
+//                                                }
+//                                            })
+//                                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                                @Override
+//                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                                    sweetAlertDialog.dismiss();
+//                                                }
+//                                            })
+//                                            .show();
+//                                }else {
+//                                    // 用户拒绝了该权限，并且选中『不再询问』
+//                                    // 用户拒绝了该权限
+//                                    new SweetAlertDialog(this)
+//                                            .setContentText("移动监测需要位置权限，请开启位置权限，以正常使用相关功能！")
+//                                            .setConfirmText("去开启")
+//                                            .setCancelText("取消")
+//                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                                @Override
+//                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                                    //跳转到应用详细界面
+//                                                    Intent intent=new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//                                                    this.startActivity(intent);
+//                                                    sweetAlertDialog.dismiss();
+//                                                }
+//                                            })
+//                                            .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                                @Override
+//                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                                    sweetAlertDialog.dismiss();
+//                                                }
+//                                            })
+//                                            .show();
+//                                }
+//                            }
+//                        });
+//                if(Build.VERSION.SDK_INT>=23){
+//                    int checkLocationPermission= ActivityCompat.checkSelfPermission
+//                            (MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+//                    if(checkLocationPermission!= PackageManager.PERMISSION_GRANTED){
+//                        //无权限，请求权限
+//                        ActivityCompat.requestPermissions(MainActivity.this,
+//                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                                RequestCode.MOBILE_MONITOR_REQUEST_PERMISSION_LOCATION_CODE);
+//                    }else{
+//
+//                    }
+//                }else{
+//                    skipActivityByFade(MobileMonitorActivity.class);
+//                }
+//                CommonUtil.skipActivityByFade(this,MobileMonitorActivity.class);
+                break;
+
+            //"河湖巡查"按钮监听
+            case R.id.rl_river_patrol:
+                CommonUtil.skipActivityByFade(this,PatrolActivity.class);
+//                if(Build.VERSION.SDK_INT>=23){
+//                    int checkLocationPermission= ActivityCompat.checkSelfPermission
+//                            (MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION);
+//                    if(checkLocationPermission!= PackageManager.PERMISSION_GRANTED){
+//                        //无权限，请求权限
+//                        ActivityCompat.requestPermissions(MainActivity.this,
+//                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                                RequestCode.RIVER_PATROL_REQUEST_PERMISSION_LOCATION_CODE);
+//                    }else{
+//                        //有权限，判断GPS是否打开
+//                        if(!CommonUtil.GpsIsOpened(MainActivity.this)){
+//                            DialogUtil.showOpenGpsDialog(MainActivity.this,
+//                                    RequestCode.RIVER_PATROL_GPS_REQUEST_CODE);
+//                        }else{
+//                            skipActivityByFade(PatrolActivity.class);
+//                        }
+//                    }
+//                }else{
+//                    skipActivityByFade(PatrolActivity.class);
+//                }
+                break;
+
+
+            //“问题记录”按钮监听
+            case R.id.rl_problem_record:
+                CommonUtil.skipActivityByFade(this,AddMomentActivity.class);
+                break;
+
+            //“事件处理”按钮监听
+            case R.id.rl_undo_task:
+                CommonUtil.skipActivityByFade(this,UndoTaskActivity.class);
+                break;
+
+            //“河湖信息”按钮监听
+            case R.id.rl_river_info:
+                CommonUtil.skipActivityByFade(this,RiverInfoActivity.class);
+                break;
+
+            //“政策法规”按钮监听
+            case R.id.rl_policy:
+                CommonUtil.skipActivityByFade(this,PolicyActivity.class);
+                break;
+
+            //“更多”按钮监听
+            case R.id.rl_more:
+                CommonUtil.skipActivityByFade(this,MenuActivity.class);
+                break;
+        }
+    }
+    
+
     /**控件监听*/
     private void listenWidget() {
-        //"地图监测"按钮监听
+        
         mapMonitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                skipToDestActivity(MapMonitorActivity.class);
+                skipToDestActivity(WaterMonitorActivity.class);
             }
         });
 
-        //“移动监测”按钮监听
+        
         mobileMonitor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

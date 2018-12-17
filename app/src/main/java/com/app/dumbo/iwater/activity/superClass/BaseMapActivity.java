@@ -5,7 +5,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -35,6 +34,7 @@ public class BaseMapActivity extends AnimFadeActivity implements SensorEventList
     private MapView myMapView =null;//Baidu地图View
     private BaiduMap myBaiduMap=null;
     private RelativeLayout normalMap, satelliteMap;//平面图和卫星图切换控件
+    private UiSettings myUiSetting;
 
     /*定位相关*/
     private SensorManager mSensorManager;
@@ -49,24 +49,51 @@ public class BaseMapActivity extends AnimFadeActivity implements SensorEventList
     private int myCurrentDirection;
 
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
+        super.onCreate(savedInstanceState);
 
-        setBaseMap(); //基本地图设置
+        //基本地图设置
+        setBaseMap();
 
-        setLocation();  //定位设置
+        //定位设置
+        setLocation();
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        //地图初始化
+        myMapView= findViewById(R.id.myMapView);
+        myBaiduMap=myMapView.getMap();
+        myUiSetting = myBaiduMap.getUiSettings();
+
+        normalMap = findViewById(R.id.rl_normal_map);
+        satelliteMap = findViewById(R.id.rl_satellite_map);
+        RelativeLayout myLocation = findViewById(R.id.my_location);
+
+        normalMap.setOnClickListener(this);
+        satelliteMap.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.rl_normal_map://监听平面图按钮，显示卫星地图
+                normalMap.setVisibility(View.INVISIBLE);
+                satelliteMap.setVisibility(View.VISIBLE);
+                myBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+                break;
+
+            case R.id.rl_satellite_map://监听卫星图按钮，显示平面地图
+                normalMap.setVisibility(View.VISIBLE);
+                satelliteMap.setVisibility(View.INVISIBLE);
+                myBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+                break;
+        }
     }
 
     /*基本地图设置*/
     private void setBaseMap() {
-        normalMap = findViewById(R.id.normal_map);
-        satelliteMap = findViewById(R.id.satellite_map);
-        RelativeLayout myLocation = findViewById(R.id.my_location);
-        //地图初始化
-        myMapView= findViewById(R.id.myMapView);
-        myBaiduMap=myMapView.getMap();
-        UiSettings myUiSetting = myBaiduMap.getUiSettings();
-
         //设置“缩放按钮”不显示
         myMapView.showZoomControls(false);
 
@@ -81,26 +108,6 @@ public class BaseMapActivity extends AnimFadeActivity implements SensorEventList
 
         //默认卫星地图
         myBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-
-        //监听平面图按钮，显示卫星地图
-        normalMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                normalMap.setVisibility(View.INVISIBLE);
-                satelliteMap.setVisibility(View.VISIBLE);
-                myBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-            }
-        });
-
-        //监听卫星图按钮，显示平面地图
-        satelliteMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                normalMap.setVisibility(View.VISIBLE);
-                satelliteMap.setVisibility(View.INVISIBLE);
-                myBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
-            }
-        });
 
         myBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
             @Override
@@ -158,23 +165,24 @@ public class BaseMapActivity extends AnimFadeActivity implements SensorEventList
                     .direction(myCurrentDirection)
                     .build();
             myBaiduMap.setMyLocationData(myLocData);
+
             if (isFirstLoc) {
                 isFirstLoc = false;
-                setZoom(getLatLng(),18.0f);
+                setZoom(getLatLng(),18.0f);//设置图的尺寸
             }
         }
+    }
 
-        /**获取经纬度*/
-        public LatLng getLatLng() {
-            return new LatLng(myCurrentLat,myCurrentLng);
-        }
+    /**获取经纬度*/
+    public LatLng getLatLng() {
+        return new LatLng(myCurrentLat,myCurrentLng);
+    }
 
-        /**设置图的尺寸*/
-        protected void setZoom(LatLng latLng,float f){
-            MapStatus.Builder builder = new MapStatus.Builder();
-            builder.target(latLng).zoom(f);
-            myBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-        }
+    /**设置图的尺寸*/
+    protected void setZoom(LatLng latLng,float f){
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(latLng).zoom(f);
+        myBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
     /*方向传感器监听*/

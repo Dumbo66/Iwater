@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+android:background="@android:color/white"
 android:orientation="vertical">
 
     <!--Map-->
@@ -14,163 +15,143 @@ android:orientation="vertical">
 
     </com.baidu.mapapi.map.MapView>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!--标题栏-->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!--状态栏-->
+            android:layout_height="45dp"
+            android:background="@android:color/background_light">
+
+            <!--返回按钮-->
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="38"
-                android:background="@android:color/background_light" />
-
-            <!--标题栏-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="66"
-                android:background="@android:color/background_light">
-                <!--返回按钮-->
-                <RelativeLayout
-                    android:id="@+id/back"
-                    android:layout_width="45dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/clicked_color_gray">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/clear" />
-                </RelativeLayout>
-
-                <!--标题-->
-                <TextView
-                    android:id="@+id/tv_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                android:id="@+id/back"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/clicked_color_gray">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:text="@string/tv_river_patrol"
-                    android:textSize="20sp" />
+                    android:src="@drawable/clear" />
+            </RelativeLayout>
 
-                <!--地图切换按钮-->
+            <!--标题-->
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/tv_river_patrol"
+                android:textSize="20sp" />
+
+            <!--地图切换按钮-->
+            <RelativeLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center">
+
                 <RelativeLayout
-                    android:layout_width="50dp"
+                    android:id="@+id/my_location"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:visibility="visible">
 
                     <RelativeLayout
-                        android:id="@+id/my_location"
+                        android:id="@+id/rl_normal_map"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:visibility="invisible">
+
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/normal_map" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_satellite_map"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:visibility="visible">
 
-                        <RelativeLayout
-                            android:id="@+id/normal_map"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:visibility="invisible">
-
-                            <ImageView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:background="@drawable/normal_map" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/satellite_map"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:visibility="visible">
-
-                            <ImageView
-                                android:layout_width="38dp"
-                                android:layout_height="38dp"
-                                android:background="@drawable/satellite_map" />
-
-                        </RelativeLayout>
+                        <ImageView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:background="@drawable/satellite_map" />
 
                     </RelativeLayout>
 
                 </RelativeLayout>
-            </RelativeLayout>
-
-            <!--Map窗-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="732">
 
             </RelativeLayout>
 
+        </RelativeLayout>
+
+        <!--Map窗-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!--开始停止栏-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="180"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/background_light">
+
+            </RelativeLayout>
+
+            <!--停止巡查-->
+            <RelativeLayout
+                android:id="@+id/rl_trace_stop"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/round_green"
+                android:visibility="visible">
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/trace_stop" />
+            </RelativeLayout>
+
+            <!--开始巡查-->
+            <RelativeLayout
+                android:id="@+id/rl_trace_start"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/round_green"
                 android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="@android:color/background_light">
-
-                </RelativeLayout>
-
-                <!--停止巡查-->
-                <RelativeLayout
-                    android:id="@+id/rl_trace_stop"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/round_green"
-                    android:visibility="visible">
-
-                    <ImageView
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/trace_stop" />
-                </RelativeLayout>
-
-                <!--开始巡查-->
-                <RelativeLayout
-                    android:id="@+id/rl_trace_start"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/round_green"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/trace_start" />
-                </RelativeLayout>
-
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/trace_start" />
             </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-    </FrameLayout>
-
-
+    </LinearLayout>
 
 </RelativeLayout>

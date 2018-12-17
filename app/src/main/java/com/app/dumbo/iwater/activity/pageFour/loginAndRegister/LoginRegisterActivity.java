@@ -1,17 +1,16 @@
 package com.app.dumbo.iwater.activity.pageFour.loginAndRegister;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.app.dumbo.iwater.R;
-import com.app.dumbo.iwater.activity.superClass.WithBackActivity;
+import com.app.dumbo.iwater.activity.superClass.AnimFadeActivity;
+import com.app.dumbo.iwater.util.CommonUtil;
 import com.mob.MobSDK;
 
 import java.util.HashMap;
@@ -27,7 +26,7 @@ import cn.sharesdk.wechat.friends.Wechat;
  * Created by dumbo on 2017/11/14.
  */
 
-public class LoginRegisterActivity extends WithBackActivity {
+public class LoginRegisterActivity extends AnimFadeActivity {
     private Button btnLogin, btnRegister;//登录或注册
     private LinearLayout weixinLogin, QQLogin, weiboLogin;//其他方式登录（微信/QQ/微博登录）
     private TextView privacyPolicy, userProtocol;//用户协议和隐私政策
@@ -40,58 +39,60 @@ public class LoginRegisterActivity extends WithBackActivity {
         //初始化MobSDK
         MobSDK.init(this);
 
-        btnLogin =  findViewById(R.id.btn_login);
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        btnLogin =  findViewById(R.id.btn_next);
         btnRegister = findViewById(R.id.btn_register);
         weixinLogin =  findViewById(R.id.ll_weixin_login);
         QQLogin =  findViewById(R.id.ll_QQ_login);
         weiboLogin =  findViewById(R.id.ll_weibo_login);
         privacyPolicy = findViewById(R.id.tv_privacy_policy);
         userProtocol =  findViewById(R.id.tv_user_protocol);
+    }
 
-        //“登录”按钮监听
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginRegisterActivity.this,LoginActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-            }
-        });
+    @Override
+    public void setListener() {
+        super.setListener();
+        btnLogin.setOnClickListener(this);
+        btnRegister.setOnClickListener(this);
+        weixinLogin.setOnClickListener(this);
+        QQLogin.setOnClickListener(this);
+        weiboLogin.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            //“登录”按钮监听
+            case R.id.btn_next:
+                CommonUtil.skipActivityByFade(this,LoginActivity.class);
+                break;
 
-        //“注册”按钮监听
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginRegisterActivity.this,RegisterActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-            }
-        });
+            //“注册”按钮监听
+            case R.id.btn_register:
+                CommonUtil.skipActivityByFade(this,RegisterActivity.class);
+                break;
 
-        //“微信登录”按钮监听
-        weixinLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               loginByWeChat();
-            }
-        });
+            //“微信登录”按钮监听
+            case R.id.ll_weixin_login:
+                loginByWeixin();
+                break;
 
-        //“QQ登录”按钮监听
-        QQLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //“QQ登录”按钮监听
+            case R.id.ll_QQ_login:
                 loginByQQ();
-            }
-        });
+                break;
 
-        //“微博登录”登录按钮监听
-        weiboLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            //“微博登录”登录按钮监听
+            case R.id.ll_weibo_login:
                 loginByWeiBo();
-            }
-        });
+                break;
+
+        }
     }
 
     //QQ授权登录
@@ -126,7 +127,7 @@ public class LoginRegisterActivity extends WithBackActivity {
     }
 
     //微信授权登录
-    public void loginByWeChat(){
+    public void loginByWeixin(){
         Platform wechat= ShareSDK.getPlatform(Wechat.NAME);
         //回调信息，可以在这里获取基本的授权返回的信息，但是注意如果做提示和UI操作要传到主线程handler里去执行
         wechat.setPlatformActionListener(new PlatformActionListener() {
@@ -170,14 +171,4 @@ public class LoginRegisterActivity extends WithBackActivity {
         });
         weibo.authorize();//单独授权,OnComplete返回的hashmap是空的
     }
-
-    //返回键退出淡入淡出效果
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode==KeyEvent.KEYCODE_BACK){
-            finish();
-            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
 }

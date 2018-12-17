@@ -15,9 +15,9 @@ import com.app.dumbo.iwater.R;
 import com.app.dumbo.iwater.activity.superClass.BaseMapActivity;
 import com.app.dumbo.iwater.constant.ResponseCode;
 import com.app.dumbo.iwater.retrofit2.Retrofit2;
-import com.app.dumbo.iwater.retrofit2.entity.DataReception;
-import com.app.dumbo.iwater.retrofit2.entity.Reception;
-import com.app.dumbo.iwater.retrofit2.entity.SitesReception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.AirDataReception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.Reception;
+import com.app.dumbo.iwater.retrofit2.entity.reception.SitesReception;
 import com.app.dumbo.iwater.util.MapUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.SDKInitializer;
@@ -38,6 +38,7 @@ import retrofit2.Response;
 public class DeviceManagerActivity extends BaseMapActivity{
     /* 基本地图相关*/
     private BaiduMap myBaiduMap;//Baidu地图
+    boolean isFirstLoc = true; // 是否首次定位
 
     /*地图标注相关*/
     private SitesReception siteInfos;//监测点信息
@@ -56,18 +57,34 @@ public class DeviceManagerActivity extends BaseMapActivity{
         SDKInitializer.initialize(getApplicationContext());
         super.onCreate(savedInstanceState);
 
-        LayoutInflater inflater=LayoutInflater.from(DeviceManagerActivity.this);
-        View view=inflater.inflate(R.layout.window_device_info,null);
-
-        add=findViewById(R.id.rl_add_device);
-        repair=view.findViewById(R.id.rl_repair);
-
         //设置定位监听器
         MyLocationListener myLocationListener =new MyLocationListener();
         setLocationListener(myLocationListener);
 
         //请求siteInfos
         callSiteInfos();
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        LayoutInflater inflater=LayoutInflater.from(DeviceManagerActivity.this);
+        View view=inflater.inflate(R.layout.window_device_info,null);
+        add=findViewById(R.id.rl_add_device);
+        repair=view.findViewById(R.id.rl_repair);
+    }
+
+    @Override
+    public void setListener() {
+        super.setListener();
+        add.setOnClickListener(this);
+        repair.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+
     }
 
     /*请求站点信息*/
@@ -82,60 +99,60 @@ public class DeviceManagerActivity extends BaseMapActivity{
                 //监测站点数量
                 siteCount=siteInfos.getData().size();
 
-                //请求monitorData
-                Call<DataReception> monitorDataCall=Retrofit2.getService().getMonitorData(siteCount);
-                monitorDataCall.enqueue(new Callback<DataReception>() {
-                    @Override
-                    public void onResponse(Call<DataReception> call,
-                                           Response<DataReception> response) {
-                        System.out.println("请求数据成功！");
-
-                        double[] lat=new double[siteCount];
-                        double[] lng=new double[siteCount];
-                        final String[] state=new String[siteCount];
-                        final String[] desc=new String[siteCount];
-                        final int s[]=new int[siteCount];
-                        latLng = new LatLng[siteCount];
-                        markers = new Marker[siteCount];
-
-                        for(short i=0;i<siteCount;i++){
-                            s[i]=siteInfos.getData().get(i).getSite();
-                            //获取经纬度
-                            lat[i]=siteInfos.getData().get(i).getLatBd09ll();
-                            lng[i]=siteInfos.getData().get(i).getLngBd09ll();
-                            latLng[i]=new LatLng(lat[i],lng[i]);
-                            //状态信息
-                            state[i]=siteInfos.getData().get(i).getWorkState();
-                            desc[i]=siteInfos.getData().get(i).getDescription();
-                            if(state[i].equals("正常")){
-                                //地图标点
-                                markers[i]= MapUtil.addMarkers(
-                                        DeviceManagerActivity.this,myBaiduMap,latLng[i],'A');
-                            }else if(state[i].equals("故障")){
-                                //地图标点
-                                markers[i]=MapUtil.addMarkers(
-                                        DeviceManagerActivity.this,myBaiduMap,latLng[i],'F');
-                            }
-                        }
-                        myBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                                for(int i=0;i<siteCount;i++){
-                                    if (marker==markers[i]){
-                                        showInfoWindow(latLng[i],s[i],state[i],desc[i]);
-                                    }
-                                }
-                                return true;
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(Call<DataReception> call, Throwable t) {
-                        System.out.println("请求数据失败！");
-                        System.out.println(t.getMessage());
-                    }
-                });
+//                //请求monitorData
+//                Call<AirDataReception> monitorDataCall=Retrofit2.getService().getMonitorData(siteCount);
+//                monitorDataCall.enqueue(new Callback<AirDataReception>() {
+//                    @Override
+//                    public void onResponse(Call<AirDataReception> call,
+//                                           Response<AirDataReception> response) {
+//                        System.out.println("请求数据成功！");
+//
+//                        double[] lat=new double[siteCount];
+//                        double[] lng=new double[siteCount];
+//                        final String[] state=new String[siteCount];
+//                        final String[] desc=new String[siteCount];
+//                        final int s[]=new int[siteCount];
+//                        latLng = new LatLng[siteCount];
+//                        markers = new Marker[siteCount];
+//
+//                        for(short i=0;i<siteCount;i++){
+//                            s[i]=siteInfos.getData().get(i).getSiteId();
+//                            //获取经纬度
+//                            lat[i]=siteInfos.getData().get(i).getLatBd09ll();
+//                            lng[i]=siteInfos.getData().get(i).getLngBd09ll();
+//                            latLng[i]=new LatLng(lat[i],lng[i]);
+//                            //状态信息
+//                            state[i]=siteInfos.getData().get(i).getWorkState();
+//                            desc[i]=siteInfos.getData().get(i).getDescription();
+//                            if(state[i].equals("正常")){
+//                                //地图标点
+//                                markers[i]= MapUtil.addMarkers(
+//                                        DeviceManagerActivity.this,myBaiduMap,latLng[i],'A');
+//                            }else if(state[i].equals("故障")){
+//                                //地图标点
+//                                markers[i]=MapUtil.addMarkers(
+//                                        DeviceManagerActivity.this,myBaiduMap,latLng[i],'F');
+//                            }
+//                        }
+//                        myBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+//                            @Override
+//                            public boolean onMarkerClick(Marker marker) {
+//                                for(int i=0;i<siteCount;i++){
+//                                    if (marker==markers[i]){
+//                                        showInfoWindow(latLng[i],s[i],state[i],desc[i]);
+//                                    }
+//                                }
+//                                return true;
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<AirDataReception> call, Throwable t) {
+//                        System.out.println("请求数据失败！");
+//                        System.out.println(t.getMessage());
+//                    }
+//                });
             }
 
             @Override
@@ -246,7 +263,11 @@ public class DeviceManagerActivity extends BaseMapActivity{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
             super.onReceiveLocation(bdLocation);
-            setZoom(getLatLng(),15.0f);
+            if (isFirstLoc) {
+                isFirstLoc = false;
+                setZoom(getLatLng(),15.0f);//设置图的尺寸
+            }
+
         }
     }
 }

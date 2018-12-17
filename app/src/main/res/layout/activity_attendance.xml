@@ -2,20 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light"/>
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@android:color/background_light">
+
         <!--返回按钮-->
         <RelativeLayout
             android:id="@+id/back"
@@ -30,6 +25,7 @@
                 android:contentDescription="@string/image" />
         </RelativeLayout>
 
+        <!--标题-->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
@@ -37,25 +33,29 @@
             android:text="@string/tv_my_attendance"
             android:layout_centerInParent="true"
             android:textSize="20sp" />
+
     </RelativeLayout>
 
     <!--分隔线-->
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/color_divider"/>
 
-        <ScrollView
+    <!--内容栏-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:background="@color/color_background" >
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="902"
-            android:fillViewport="true">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            </LinearLayout>
-
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

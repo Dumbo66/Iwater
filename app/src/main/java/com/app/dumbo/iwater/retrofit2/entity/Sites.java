@@ -1,40 +1,58 @@
 package com.app.dumbo.iwater.retrofit2.entity;
 
-/**
- * --监测点实体类--
- *
- * Created by Dumbo on 2018/4/22
- **/
-
 public class Sites {
-    private int site;
-    private double latBd09ll;
-    private double lngBd09ll;
+    private String siteId;
+
+    private Double latWgs84;
+
+    private String latType;
+
+    private Double lngWgs84;
+
+    private String lngType;
+
     private String workState;
+
     private String description;
 
-    public int getSite() {
-        return site;
+    public String getSiteId() {
+        return siteId;
     }
 
-    public void setSite(int site) {
-        this.site = site;
+    public void setSiteId(String siteId) {
+        this.siteId = siteId == null ? null : siteId.trim();
     }
 
-    public double getLatBd09ll() {
-        return latBd09ll;
+    public Double getLatWgs84() {
+        return latWgs84;
     }
 
-    public void setLatBd09ll(double latBd09ll) {
-        this.latBd09ll = latBd09ll;
+    public void setLatWgs84(Double latWgs84) {
+        this.latWgs84 = latWgs84;
     }
 
-    public double getLngBd09ll() {
-        return lngBd09ll;
+    public String getLatType() {
+        return latType;
     }
 
-    public void setLngBd09ll(double lngBd09ll) {
-        this.lngBd09ll = lngBd09ll;
+    public void setLatType(String latType) {
+        this.latType = latType == null ? null : latType.trim();
+    }
+
+    public Double getLngWgs84() {
+        return lngWgs84;
+    }
+
+    public void setLngWgs84(Double lngWgs84) {
+        this.lngWgs84 = lngWgs84;
+    }
+
+    public String getLngType() {
+        return lngType;
+    }
+
+    public void setLngType(String lngType) {
+        this.lngType = lngType == null ? null : lngType.trim();
     }
 
     public String getWorkState() {
@@ -42,7 +60,7 @@ public class Sites {
     }
 
     public void setWorkState(String workState) {
-        this.workState = workState;
+        this.workState = workState == null ? null : workState.trim();
     }
 
     public String getDescription() {
@@ -50,6 +68,6 @@ public class Sites {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description == null ? null : description.trim();
     }
 }

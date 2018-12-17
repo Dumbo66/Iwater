@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical">
-    <!--状态栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="38"
-        android:background="@android:color/background_light"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="66"
+        android:layout_height="45dp"
         android:background="@android:color/background_light">
+
         <!--返回按钮-->
         <RelativeLayout
             android:id="@+id/back"
@@ -29,6 +24,7 @@ android:orientation="vertical">
                 android:src="@drawable/clear" />
         </RelativeLayout>
 
+        <!--标题-->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
@@ -36,40 +32,42 @@ android:orientation="vertical">
             android:text="设置"
             android:layout_centerInParent="true"
             android:textSize="20sp" />
+
     </RelativeLayout>
 
     <!--分隔线-->
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/color_divider"/>
 
-    <RelativeLayout
+    <!--内容栏-->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="902">
-        <ScrollView
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <RelativeLayout
-                    android:id="@+id/rl_log_out"
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp"
-                    android:gravity="center"
-                    android:background="@drawable/clicked_color_red">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="退出登录"/>
-                </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
+            <!--退出登录按钮-->
+            <RelativeLayout
+                android:id="@+id/rl_log_out"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center"
+                android:background="@drawable/clicked_color_red">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="退出登录"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
